@@ -19,14 +19,15 @@ a {
 
 .container {
   display: flex;
+  margin: 0;
 }
 
 .menuContainer {
   width: 250px;
-  padding: 5px 20 px;
+  padding: 5px 20px;
   border-right: 2px solid var(--soft-bg);
 }
 .contentContainer {
-  padding: 5px 20 px;
+  padding: 5px 20px;
   width: 100%;
 }

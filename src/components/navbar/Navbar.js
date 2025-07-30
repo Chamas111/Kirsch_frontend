@@ -1,10 +1,10 @@
 import "./navbar.css";
-import search from "./fotos/14794106671556282358.svg";
-import app from "./fotos/14155164661594722077.svg";
+import search from "./fotos/3844432_magnifier_search_zoom_icon.svg";
+import app from "./fotos/app.svg";
 import logo from "./fotos/logo.svg";
-import expand from "./fotos/20037581261630422108.svg";
-import settings from "./fotos//4157467991600002640.svg";
-import notification from "./fotos/11632223091641180049.svg";
+import expand from "./fotos/8541985_expand_arrows_alt_icon.svg";
+import settings from "./fotos/Setting.svg";
+import notification from "./fotos/notification.svg";
 function Navbar() {
   return (
     <div className="navbar">
