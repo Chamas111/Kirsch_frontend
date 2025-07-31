@@ -3,31 +3,21 @@ import "./menu.css";
 import { Link } from "react-router-dom";
 import home from "../navbar/fotos/home.svg";
 import profile from "../navbar/fotos/profile.svg";
+import { menu } from "../../data";
 function Menu() {
   return (
     <div className="menu">
-      <div className="item">
-        <span className="title">Main</span>
-        <Link to="/" className="listItem">
-          <img src={home} alt="" />
-          <span className="listItemTitle">Home</span>
-        </Link>
-        <Link to="/" className="listItem">
-          <img src={profile} alt="" />
-          <span className="listItemTitle">User</span>
-        </Link>
-      </div>
-      <div className="item">
-        <span className="title">Main</span>
-        <Link to="/" className="listItem">
-          <img src={home} alt="" />
-          <span className="listItemTitle">Home</span>
-        </Link>
-        <Link to="/" className="listItem">
-          <img src={profile} alt="" />
-          <span className="listItemTitle">User</span>
-        </Link>
-      </div>
+      {menu.map((item) => (
+        <div className="item" key={item.id}>
+          <span className="title">{item.title}</span>
+          {item.listItems.map((listItems) => (
+            <Link to="/" className="listItem" key={listItems.id}>
+              <img src={listItems.icon} alt="" />
+              <span className="listItemTitle">{listItems.title}</span>
+            </Link>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
