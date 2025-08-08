@@ -27,6 +27,7 @@ import Menu from "./components/menu/Menu";
 import Lagerung from "./pages/lagerung/Lagerung";
 import Login from "./pages/login/Login";
 import "./styles/global.css";
+import Register from "./pages/register/Register";
 const localizer = momentLocalizer(moment);
 
 function App() {
@@ -80,11 +81,15 @@ function App() {
           path: "/lagerung",
           element: <Lagerung />,
         },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
+        },
       ],
-    },
-    {
-      path: "/login",
-      element: <Login />,
     },
   ]);
   return <RouterProvider router={router} />;
