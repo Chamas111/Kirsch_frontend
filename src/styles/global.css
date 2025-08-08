@@ -20,6 +20,7 @@ a {
 .container {
   display: flex;
   margin: 0;
+  max-width: 100% !important;
 }
 
 .menuContainer {
@@ -28,6 +29,6 @@ a {
   border-right: 2px solid var(--soft-bg);
 }
 .contentContainer {
+  flex: 1;
   padding: 5px 20px;
-  width: 100%;
 }

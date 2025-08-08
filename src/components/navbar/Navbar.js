@@ -1,36 +1,46 @@
 import "./navbar.css";
-import search from "./fotos/3844432_magnifier_search_zoom_icon.svg";
-import app from "./fotos/app.svg";
-import logo from "./fotos/logo.svg";
-import expand from "./fotos/8541985_expand_arrows_alt_icon.svg";
-import settings from "./fotos/Setting.svg";
-import notification from "./fotos/notification.svg";
+
+import logo from "../navbar/fotos/logo.svg";
+import { Link } from "react-router-dom";
+
 function Navbar() {
   return (
-    <div className="navbar">
-      <div className="logo">
-        <img src={logo} alt="" />
-        <span>Umzugsunternehmen Kirsch GmbH</span>
-      </div>
-      <div className="icons">
-        <img src={search} alt="" className="icon" />
-        <img src={app} alt="" className="icon" />
-        <img src={expand} alt="" className="icon" />
-        <div className="notification">
-          <img src={notification} alt="" className="icon" />
-          <span>1</span>
-        </div>
-        <div className="user">
+    <nav class="navbar navbar-expand-lg navbar-light py-2 ">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="https://library.livecanvas.com/sections/">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3wEbguhOA1bxt-fsx-N_OpNWXX0FYp7oRJQ&s"
+            class="img-fluid rounded-circle"
+            src={logo}
             alt=""
+            width="48px"
+            height="48px"
           />
-          <span>Jane</span>
+        </a>
+        <p className="align-text-top pt-3 fw-bolder">
+          Umzugsunternehmen Kirsch GmbH
+        </p>
+        <button
+          class="navbar-toggler "
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#nav_lc"
+          aria-controls="nav_lc"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="ms-lg-auto d-flex">
+          <Link className="btn btn-success btn-md me-2" to="/login">
+            Sign In
+          </Link>
+          <Link className="btn btn-primary" to="/register">
+            Sign Up
+          </Link>
         </div>
-        <img src={settings} alt="" className="icon" />
       </div>
-    </div>
+    </nav>
   );
 }
-
 export default Navbar;
