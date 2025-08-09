@@ -1,19 +1,21 @@
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { useState } from "react";
 import {
   Routes,
   Route,
-  RouterProvider,
-  Link,
+  BrowserRouter,
+  Navigate,
   Outlet,
-  createBrowserRouter,
 } from "react-router-dom";
 import moment from "moment";
+import { momentLocalizer } from "react-big-calendar";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import CalendarPage from "./components/CalendarPage";
 import NewAuftrag from "./components/NewAuftrag";
 import AuftragDetails from "./components/AuftragDetails";
 import UpdateAuftrag from "./components/UpdateAuftrag";
+import Auftraege from "./components/Auftraege";
+
 import Home from "./pages/home/Home";
 import User from "./pages/user/User";
 import Kalendar from "./pages/kalendar/Kalendar";
@@ -24,75 +26,77 @@ import Ausgaben from "./pages/ausgaben/Ausgaben";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
+
 import Lagerung from "./pages/lagerung/Lagerung";
 import Login from "./pages/login/Login";
 import "./styles/global.css";
 import Register from "./pages/register/Register";
+
 const localizer = momentLocalizer(moment);
 
-function App() {
-  const Layout = () => {
-    return (
-      <div className="main">
-        <Navbar />
-        <div className="container">
-          <div className="menuContainer">
-            <Menu />
-          </div>
-          <div className="contentContainer">
-            <Outlet />
-          </div>
+const Layout = ({ isLoggedin, setIsLoggedin }) => {
+  return (
+    <div className="main">
+      <Navbar isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+      <div className="container">
+        <div className="menuContainer">
+          <Menu />
         </div>
-        <Footer />
+        <div className="contentContainer">
+          <Outlet />
+        </div>
       </div>
-    );
-  };
+      <Footer />
+    </div>
+  );
+};
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
+// PrivateRoute now renders Layout + children
+const PrivateRoute = ({ isLoggedin, setIsLoggedin }) => {
+  return isLoggedin ? (
+    <Layout isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+  ) : (
+    <Navigate to="/login" />
+  );
+};
 
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        { path: "/user", element: <User /> },
-        { path: "/kalendar", element: <Kalendar /> },
-        ,
-        {
-          path: "/hvz",
-          element: <Hvz />,
-        },
-        {
-          path: "/rechnungen",
-          element: <Rechnungen />,
-        },
-        {
-          path: "/kva",
-          element: <Kva />,
-        },
-        {
-          path: "/ausgaben",
-          element: <Ausgaben />,
-        },
-        {
-          path: "/lagerung",
-          element: <Lagerung />,
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/register",
-          element: <Register />,
-        },
-      ],
-    },
-  ]);
-  return <RouterProvider router={router} />;
+function App() {
+  const [isLoggedin, setIsLoggedin] = useState(false);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public routes */}
+        <Route
+          path="/login"
+          element={<Login setIsLoggedin={setIsLoggedin} />}
+        />
+        <Route path="/register" element={<Register />} />
+
+        {/* Private routes */}
+        <Route
+          element={
+            <PrivateRoute
+              isLoggedin={isLoggedin}
+              setIsLoggedin={setIsLoggedin}
+            />
+          }
+        >
+          <Route path="/" element={<Home />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/kalendar" element={<Kalendar />} />
+          <Route path="/hvz" element={<Hvz />} />
+          <Route path="/rechnungen" element={<Rechnungen />} />
+          <Route path="/kva" element={<Kva />} />
+          <Route path="/ausgaben" element={<Ausgaben />} />
+          <Route path="/lagerung" element={<Lagerung />} />
+        </Route>
+
+        {/* 404 fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

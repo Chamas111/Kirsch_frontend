@@ -1,201 +1,99 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
+import axios from "../../axiosinstance";
 function Register() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/auth/register", user)
+      .then((res) => {
+        console.log("dddd", res.data);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+
   return (
     <div class="container register">
       <div class="row">
         <div class="col-md-3 register-left">
           <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
           <h3>Welcome</h3>
-          <p>You are 30 seconds away from earning your own money!</p>
+          <p>Please Login if you already have an account!</p>
           <button type="submit" name="" className="btn btn-success">
             <Link to="/login"> Login</Link>
           </button>
           <br />
         </div>
         <div class="col-md-9 register-right">
-          <div class="tab-content" id="myTabContent">
-            <div
-              class="tab-pane fade show active"
-              id="home"
-              role="tabpanel"
-              aria-labelledby="home-tab"
-            >
-              <h3 class="register-heading">Apply as a Employee</h3>
-              <div class="row register-form">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="First Name *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Last Name *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Password *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Confirm Password *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <div class="maxl">
-                      <label class="radio inline">
-                        <input type="radio" name="gender" value="male" />
-                        <span> Male </span>
-                      </label>
-                      <label class="radio inline">
-                        <input type="radio" name="gender" value="female" />
-                        <span>Female </span>
-                      </label>
-                    </div>
-                  </div>
+          <h3 class="register-heading">Apply as a Employee</h3>
+          <form onSubmit={handleSubmit}>
+            <div class="row register-form">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Name *"
+                    value={user.username}
+                    name="username"
+                    onChange={handleChange}
+                  />
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      placeholder="Your Email *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      minlength="10"
-                      maxlength="10"
-                      name="txtEmpPhone"
-                      class="form-control"
-                      placeholder="Your Phone *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <select class="form-control">
-                      <option class="hidden" selected disabled>
-                        Please select your Sequrity Question
-                      </option>
-                      <option>What is your Birthdate?</option>
-                      <option>What is Your old Phone Number</option>
-                      <option>What is your Pet Name?</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter Your Answer *"
-                      value=""
-                    />
-                  </div>
-                  <input type="submit" class="btnRegister" value="Register" />
+
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Password *"
+                    value={user.password}
+                    name="password"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Confirm Password *"
+                    value={user.confirmPassword}
+                    name="confirmPassword"
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
-            </div>
-            <div
-              class="tab-pane fade show"
-              id="profile"
-              role="tabpanel"
-              aria-labelledby="profile-tab"
-            >
-              <h3 class="register-heading">Apply as a Hirer</h3>
-              <div class="row register-form">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="First Name *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Last Name *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      placeholder="Email *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      maxlength="10"
-                      minlength="10"
-                      class="form-control"
-                      placeholder="Phone *"
-                      value=""
-                    />
-                  </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Your Email *"
+                    value={user.email}
+                    name="email"
+                    onChange={handleChange}
+                  />
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Password *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Confirm Password *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <select class="form-control">
-                      <option class="hidden" selected disabled>
-                        Please select your Sequrity Question
-                      </option>
-                      <option>What is your Birthdate?</option>
-                      <option>What is Your old Phone Number</option>
-                      <option>What is your Pet Name?</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="`Answer *"
-                      value=""
-                    />
-                  </div>
-                  <input type="submit" class="btnRegister" value="Register" />
-                </div>
+
+                <input type="submit" class="btnRegister" value="Register" />
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
