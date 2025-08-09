@@ -1,21 +1,51 @@
-import Register from "../register/Register";
 import "./login.css";
-import { Link } from "react-router-dom";
-function Login() {
+
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import axios from "../../axiosinstance";
+
+function Login({ setIsLoggedin }) {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/auth/login", user)
+      .then((res) => {
+        console.log(res.data);
+        setIsLoggedin(true);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
   return (
     <div className="login-container">
       <div className="login-box">
         <h3 className="text-center text-info mb-4">Login</h3>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
-            <label htmlFor="username" className="text-info">
-              Username:
+            <label htmlFor="email" className="text-info">
+              Email
             </label>
             <input
-              type="text"
-              name="username"
+              type="email"
+              name="email"
               id="username"
               className="form-control"
+              value={user.email}
+              onChange={handleChange}
             />
           </div>
 
@@ -28,6 +58,8 @@ function Login() {
               name="password"
               id="password"
               className="form-control"
+              value={user.password}
+              onChange={handleChange}
             />
           </div>
 
