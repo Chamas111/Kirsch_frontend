@@ -30,71 +30,64 @@ function Register() {
   };
 
   return (
-    <div class="container register">
-      <div class="row">
-        <div class="col-md-3 register-left">
-          <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
-          <h3>Welcome</h3>
-          <p>Please Login if you already have an account!</p>
-          <button type="submit" name="" className="btn btn-success">
-            <Link to="/login"> Login</Link>
-          </button>
-          <br />
-        </div>
-        <div class="col-md-9 register-right">
-          <h3 class="register-heading">Apply as a Employee</h3>
-          <form onSubmit={handleSubmit}>
-            <div class="row register-form">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Name *"
-                    value={user.username}
-                    name="username"
-                    onChange={handleChange}
-                  />
-                </div>
+    <div class="register">
+      <div className="register-box">
+        <h3 className="text-center text-info mb-4">Register</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group mb-3">
+            <label htmlFor="username" className="text-info">
+              Username*
+            </label>
+            <input
+              type="text"
+              name="username"
+              className="form-control"
+              value={user.username}
+              onChange={handleChange}
+            />
 
-                <div class="form-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Password *"
-                    value={user.password}
-                    name="password"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Confirm Password *"
-                    value={user.confirmPassword}
-                    name="confirmPassword"
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Your Email *"
-                    value={user.email}
-                    name="email"
-                    onChange={handleChange}
-                  />
-                </div>
+            <label htmlFor="email" className="text-info">
+              Email*
+            </label>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              value={user.email}
+              onChange={handleChange}
+            />
 
-                <input type="submit" class="btnRegister" value="Register" />
-              </div>
-            </div>
-          </form>
-        </div>
+            <label htmlFor="password" className="text-info">
+              Password*
+            </label>
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              value={user.password}
+              onChange={handleChange}
+            />
+
+            <label htmlFor="confirmpassword" className="text-info">
+              Confirm Password*
+            </label>
+            <input
+              type="password"
+              name="confirmpassword"
+              className="form-control"
+              value={user.confirmPassword}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="container flex gap-2 justify-content-center pt-4">
+            <button type="submit" className="btn btn-primary gap-1" name="">
+              Register
+            </button>
+            <button type="submit" name="" className="btn btn-success">
+              <Link to="/login"> Login</Link>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

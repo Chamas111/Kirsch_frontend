@@ -63,18 +63,6 @@ function Login({ setIsLoggedin }) {
             />
           </div>
 
-          <div className="form-check mb-3">
-            <input
-              type="checkbox"
-              id="remember-me"
-              name="remember-me"
-              className="form-check-input"
-            />
-            <label htmlFor="remember-me" className="form-check-label text-info">
-              Remember me
-            </label>
-          </div>
-
           <button type="submit" className="btn btn-info w-100">
             Submit
           </button>
