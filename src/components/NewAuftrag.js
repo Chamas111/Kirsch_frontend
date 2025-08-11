@@ -55,10 +55,13 @@ function NewAuftrag() {
 
     await axios.post(
       `${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege`,
-      newAuftrag
+      newAuftrag,
+      {
+        withCredentials: true, // send cookies
+      }
     );
 
-    navigate("/"); // Redirect back to calendar after save
+    navigate("/calendar"); // Redirect back to calendar after save
   };
 
   return (

@@ -20,7 +20,7 @@ function Login({ setIsLoggedin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("/auth/login", user)
+      .post("/auth/login", user, { withCredentials: true })
       .then((res) => {
         console.log(res.data);
         setIsLoggedin(true);

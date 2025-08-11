@@ -26,7 +26,9 @@ function UpdateAuftrag() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`)
+      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`, {
+        withCredentials: true,
+      })
 
       .then((res) => setAuftrag(res.data))
       .catch((e) => console.log(e));
@@ -51,7 +53,8 @@ function UpdateAuftrag() {
     axios
       .put(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`,
-        auftrag
+        auftrag,
+        { withCredentials: true }
       )
 
       .then((res) => navigate("/"))
