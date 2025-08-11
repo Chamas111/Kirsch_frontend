@@ -32,7 +32,9 @@ function AuftragDetails() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`)
+      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setEvent(res.data);
         setTitle(res.data.title);
@@ -95,7 +97,8 @@ function AuftragDetails() {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
         await axios.delete(
-          `${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`
+          `${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`,
+          { withCredentials: true }
         );
         alert("Event deleted successfully!");
         navigate("/");

@@ -43,7 +43,7 @@ const Layout = ({ isLoggedin, setIsLoggedin }) => {
           <Menu />
         </div>
         <div className="contentContainer">
-          <Outlet />
+          <Outlet /> {/* Pages go here */}
         </div>
       </div>
       <Footer />
@@ -52,44 +52,40 @@ const Layout = ({ isLoggedin, setIsLoggedin }) => {
 };
 
 // PrivateRoute now renders Layout + children
-const PrivateRoute = ({ isLoggedin, setIsLoggedin }) => {
-  return isLoggedin ? (
-    <Layout isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
-  ) : (
-    <Navigate to="/login" />
-  );
+const PrivateRoute = ({ isLoggedin }) => {
+  return isLoggedin ? <Outlet /> : <Navigate to="/login" />;
 };
-
 function App() {
   const [isLoggedin, setIsLoggedin] = useState(false);
 
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public routes */}
+        {/* Public */}
         <Route
           path="/login"
           element={<Login setIsLoggedin={setIsLoggedin} />}
         />
         <Route path="/register" element={<Register />} />
 
-        {/* Private routes */}
-        <Route
-          element={
-            <PrivateRoute
-              isLoggedin={isLoggedin}
-              setIsLoggedin={setIsLoggedin}
-            />
-          }
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/kalendar" element={<Kalendar />} />
-          <Route path="/hvz" element={<Hvz />} />
-          <Route path="/rechnungen" element={<Rechnungen />} />
-          <Route path="/kva" element={<Kva />} />
-          <Route path="/ausgaben" element={<Ausgaben />} />
-          <Route path="/lagerung" element={<Lagerung />} />
+        {/* Private */}
+        <Route element={<PrivateRoute isLoggedin={isLoggedin} />}>
+          <Route
+            element={
+              <Layout isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+            }
+          >
+            <Route path="/" element={<Home />} />
+            <Route path="/user" element={<User />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/calendar/new" element={<NewAuftrag />} />
+            <Route path="/auftrag/:id" element={<AuftragDetails />} />
+            <Route path="/hvz" element={<Hvz />} />
+            <Route path="/rechnungen" element={<Rechnungen />} />
+            <Route path="/kva" element={<Kva />} />
+            <Route path="/ausgaben" element={<Ausgaben />} />
+            <Route path="/lagerung" element={<Lagerung />} />
+          </Route>
         </Route>
 
         {/* 404 fallback */}

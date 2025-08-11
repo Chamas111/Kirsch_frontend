@@ -14,7 +14,9 @@ function CalendarPage() {
   // ✅ Fetch events from the backend
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege`)
+      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege`, {
+        withCredentials: true,
+      })
       .then((res) => {
         // Convert date strings to JS Date objects
         const loadedEvents = res.data.map((e) => ({
@@ -37,12 +39,15 @@ function CalendarPage() {
 
     const res = await axios.post(
       `${process.env.REACT_APP_SERVER_BASE_URL}/api/events`,
-      newEvent
+      newEvent,
+      {
+        withCredentials: true, // send cookies
+      }
     );
 
     // 2. Redirect to Auftrag form with eventId
-    navigate("/new-auftrag", {
-      state: { eventId: res.data._id },
+    navigate("/calendar/new", {
+      state: { eventId: res.data._id, selectedDate: slotInfo.start },
     });
   };
   const handleSelectEvent = (event) => {

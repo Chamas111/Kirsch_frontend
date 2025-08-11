@@ -7,7 +7,9 @@ function Auftraege() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege`)
+      .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege`, {
+        withCredentials: true,
+      })
 
       .then((res) => setAuftraege(res.data))
       .catch((e) => console.log(e));
