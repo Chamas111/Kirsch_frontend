@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
+
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "../../src/styles/global.css";
 
 const localizer = momentLocalizer(moment);
 
 function CalendarPage() {
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [currentView, setCurrentView] = useState(Views.MONTH);
   // ✅ Fetch events from the backend
   useEffect(() => {
@@ -55,7 +58,7 @@ function CalendarPage() {
   };
 
   return (
-    <div style={{ height: "500px", margin: "50px" }}>
+    <div style={{ height: "754px", margin: "50px" }}>
       <Calendar
         localizer={localizer}
         events={events}
@@ -64,10 +67,18 @@ function CalendarPage() {
         selectable
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
-        style={{ height: 600 }}
+        style={{
+          height: 700,
+          backgroundColor: "#f0f9ff", // light blue
+          padding: "10px",
+          borderRadius: "10px",
+          color: "#000",
+        }}
         views={[Views.MONTH, Views.WEEK, Views.DAY, Views.AGENDA]} // ✅ Enable all views
         view={currentView}
         onView={(view) => setCurrentView(view)} // ✅ Track current view
+        date={currentDate}
+        onNavigate={(date) => setCurrentDate(date)}
         defaultView={Views.MONTH}
       />
     </div>

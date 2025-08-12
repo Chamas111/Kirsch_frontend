@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import axios from "../axiosinstance";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function NewAuftrag() {

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "../src/axiosinstance";
 import {
   Routes,
   Route,
@@ -31,6 +32,8 @@ import Lagerung from "./pages/lagerung/Lagerung";
 import Login from "./pages/login/Login";
 import "./styles/global.css";
 import Register from "./pages/register/Register";
+import NewHvz from "./pages/hvz/NewHvz";
+import UpdateHvz from "./pages/hvz/UpdateHvz";
 
 const localizer = momentLocalizer(moment);
 
@@ -53,11 +56,31 @@ const Layout = ({ isLoggedin, setIsLoggedin }) => {
 
 // PrivateRoute now renders Layout + children
 const PrivateRoute = ({ isLoggedin }) => {
+  console.log("PrivateRoute check — isLoggedin:", isLoggedin);
   return isLoggedin ? <Outlet /> : <Navigate to="/login" />;
 };
 function App() {
   const [isLoggedin, setIsLoggedin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    axios
+      .get("/auth/me", { withCredentials: true })
+      .then((res) => {
+        console.log("Logged in user:", res.data);
+        setIsLoggedin(true);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Not logged in:", err.response?.data || err.message);
+        setIsLoggedin(false);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // prevent redirect while checking
+  }
   return (
     <BrowserRouter>
       <Routes>
@@ -80,7 +103,10 @@ function App() {
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/calendar/new" element={<NewAuftrag />} />
             <Route path="/auftrag/:id" element={<AuftragDetails />} />
+            <Route path="/auftraege/:id/update" element={<UpdateAuftrag />} />
             <Route path="/hvz" element={<Hvz />} />
+            <Route path="/hvz/new" element={<NewHvz />} />
+            <Route path="/hvz/:id/update" element={<UpdateHvz />} />
             <Route path="/rechnungen" element={<Rechnungen />} />
             <Route path="/kva" element={<Kva />} />
             <Route path="/ausgaben" element={<Ausgaben />} />

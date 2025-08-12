@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../axiosinstance";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 function UpdateAuftrag() {
@@ -57,7 +57,7 @@ function UpdateAuftrag() {
         { withCredentials: true }
       )
 
-      .then((res) => navigate("/"))
+      .then((res) => navigate("/calendar"))
       .catch((e) => console.log(e));
   };
   return (
