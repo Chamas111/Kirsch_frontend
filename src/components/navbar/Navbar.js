@@ -20,7 +20,7 @@ function Navbar({ isLoggedin, setIsLoggedin }) {
 
   const handleLogout = () => {
     axios
-      .post("auth/logout", {})
+      .post("auth/logout", {}, { withCredentials: true })
       .then((res) => {
         setIsLoggedin(false);
         console.log("Logged out");

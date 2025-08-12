@@ -1,97 +1,49 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useRef } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
 function AuftragDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [Auftraege, setAuftraege] = useState([]);
   const [event, setEvent] = useState(null);
   const printRef = useRef(null);
-
-  const [title, setTitle] = useState("");
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-  const [datum, setDatum] = useState("");
-  const [uhrZeit, setUhrZeit] = useState("");
-  const [kundeName, setKundeName] = useState("");
-  const [auszugsadresse, setAuszugsadresse] = useState("");
-  const [auszugsEtage, setAuszugsEtage] = useState("");
-  const [auszugsAufzug, setAuszugsAufzug] = useState("");
-  const [einzugsadresse, setEinzugsadresse] = useState("");
-  const [einzugsEtage, setEinzugsEtage] = useState("");
-  const [einzugsAufzug, setEinzugsAufzug] = useState("");
-  const [preis, setPreis] = useState("");
-  const [hvz, setHvz] = useState("");
-  const [bezahlMethod, setBezahlMethod] = useState("Bezahlung in bar");
-  const [bemerkungen, setBemerkungen] = useState("");
-  const [tel, setTel] = useState("");
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`, {
         withCredentials: true,
       })
-      .then((res) => {
-        setEvent(res.data);
-        setTitle(res.data.title);
-        setStart(res.data.start);
-        setEnd(res.data.end);
-        setDatum(res.data.datum);
-        setUhrZeit(res.data.uhrZeit);
-        setKundeName(res.data.kundeName);
-        setTel(res.data.tel);
-        setAuszugsadresse(res.data.auszugsadresse);
-        setAuszugsEtage(res.data.auszugsEtage);
-        setAuszugsAufzug(res.data.auszugsAufzug);
-        setEinzugsadresse(res.data.einzugsadresse);
-        setEinzugsEtage(res.data.einzugsEtage);
-        setEinzugsAufzug(res.data.einzugsAufzug);
-        setPreis(res.data.preis);
-        setHvz(res.data.hvz);
-        setBezahlMethod(res.data.bezahlMethod);
-        setBemerkungen(res.data.bemerkungen);
-      })
+      .then((res) => setEvent(res.data))
       .catch((err) => console.error("Error fetching event:", err));
   }, [id]);
 
-  // const handleUpdate = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.put(
-  //       `${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`,
-  //       {
-  //         title,
-  //         start,
-  //         end,
-  //         kundeName,
+  const handleDownload = async () => {
+    if (!printRef.current) return;
 
-  //         datum,
-  //         uhrZeit,
-  //         kundeName,
-  //         tel,
-  //         auszugsadresse,
-  //         auszugsEtage,
-  //         auszugsAufzug,
-  //         einzugsadresse,
-  //         einzugsEtage,
-  //         einzugsAufzug,
-  //         preis,
-  //         hvz,
-  //         bezahlMethod,
-  //         bemerkungen,
-  //       }
-  //     );
-  //     alert("Event updated successfully!");
-  //     setIsEditing(false);
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error("Error updating event:", error);
-  //   }
-  // };
+    // Small delay to ensure rendering is complete
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    const canvas = await html2canvas(printRef.current, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff", // ensure white background
+      ignoreElements: (el) => el.classList.contains("no-print"),
+    });
+
+    const data = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "pt", "a4");
+
+    const imgProps = pdf.getImageProperties(data);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`auftrag-${event?._id || "details"}.pdf`);
+  };
+
+  if (!event) return <p>Loading...</p>;
 
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this event?")) {
@@ -101,47 +53,33 @@ function AuftragDetails() {
           { withCredentials: true }
         );
         alert("Event deleted successfully!");
-        navigate("/");
+        navigate("/calendar");
       } catch (error) {
         console.error("Error deleting event:", error);
       }
     }
   };
 
-  const handleDownload = async () => {
-    const element = printRef.current;
-    if (!element) {
-      return;
-    }
-    const canvas = await html2canvas(element, { scale: 2 });
-    const data = canvas.toDataURL("image/png");
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "px",
-      format: "a4",
-    });
-
-    const imgProperties = pdf.getImageProperties(data);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-    pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save("example.pdf");
-  };
-
-  if (!event) return <p>Loading...</p>;
-
   return (
     <>
-      <div style={{ padding: 20, fontSize: "24px" }} ref={printRef}>
+      <div
+        style={{
+          padding: 20,
+          fontSize: "24px",
+          color: "#000",
+          maxWidth: "800px",
+        }}
+        ref={printRef}
+      >
         <h2>Auftrag Details</h2>
 
         <p>
           <strong>Title:</strong> {event.title}
         </p>
-        <p>
+        <p className="no-print">
           <strong>Start:</strong> {new Date(event.start).toLocaleString()}
         </p>
-        <p>
+        <p className="no-print">
           <strong>End:</strong> {new Date(event.end).toLocaleString()}
         </p>
 
