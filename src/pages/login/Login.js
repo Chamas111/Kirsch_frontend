@@ -1,5 +1,5 @@
 import "./login.css";
-
+import logo from "../../components/navbar/fotos/logo.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -33,7 +33,12 @@ function Login({ setIsLoggedin }) {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h3 className="text-center text-info mb-4">Login</h3>
+        <h2 className="text-center text-info mb-4">Login</h2>
+        <img
+          src={logo}
+          style={{ width: "150px", height: "150px" }}
+          className="rounded mx-auto d-block rounded-circle"
+        />
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="email" className="text-info">

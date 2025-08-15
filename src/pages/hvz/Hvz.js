@@ -151,7 +151,7 @@ function Hvz() {
   };
 
   return (
-    <div className="hvz">
+    <div>
       {/* Tabs */}
       <div className="tabs mb-3 d-flex gap-2">
         {months.map((monthKey) => (
@@ -256,9 +256,10 @@ function Hvz() {
       </table>
 
       {/* Add new HVZ button */}
+
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-primary "
         onClick={() => navigate("/hvz/new")}
       >
         Add HVZ

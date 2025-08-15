@@ -20,7 +20,7 @@ import Auftraege from "./components/Auftraege";
 import Home from "./pages/home/Home";
 import User from "./pages/user/User";
 import Kalendar from "./pages/kalendar/Kalendar";
-import Kva from "./pages/kva/Kva";
+
 import Hvz from "./pages/hvz/Hvz";
 import Rechnungen from "./pages/rechnungen/Rechnungen";
 import Ausgaben from "./pages/ausgaben/Ausgaben";
@@ -34,6 +34,12 @@ import "./styles/global.css";
 import Register from "./pages/register/Register";
 import NewHvz from "./pages/hvz/NewHvz";
 import UpdateHvz from "./pages/hvz/UpdateHvz";
+import NewLager from "./pages/lagerung/NewLager";
+import UpdateLager from "./pages/lagerung/UpdateLager";
+import NewAusgabe from "./pages/ausgaben/NewAusgabe";
+import UpdateAusgabe from "./pages/ausgaben/UpdateAusgabe";
+import NewRechnung from "./pages/rechnungen/NewRechnung";
+import UpdateRechnung from "./pages/rechnungen/UpdateRechnung";
 
 const localizer = momentLocalizer(moment);
 
@@ -108,9 +114,14 @@ function App() {
             <Route path="/hvz/new" element={<NewHvz />} />
             <Route path="/hvz/:id/update" element={<UpdateHvz />} />
             <Route path="/rechnungen" element={<Rechnungen />} />
-            <Route path="/kva" element={<Kva />} />
+            <Route path="/rechnungen/new" element={<NewRechnung />} />
+            <Route path="/rechnungen/:id/update" element={<UpdateRechnung />} />
             <Route path="/ausgaben" element={<Ausgaben />} />
+            <Route path="/ausgaben/new" element={<NewAusgabe />} />
+            <Route path="/ausgaben/:id/update" element={<UpdateAusgabe />} />
             <Route path="/lagerung" element={<Lagerung />} />
+            <Route path="/lagerung/new" element={<NewLager />} />
+            <Route path="/lagerung/:id/update" element={<UpdateLager />} />
           </Route>
         </Route>
 
