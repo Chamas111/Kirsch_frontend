@@ -22,7 +22,6 @@ export const menu = [
       { id: 4, title: "Lagerung", url: "/lagerung", icon: lagerung },
       { id: 5, title: "Rechnungen", url: "/rechnungen", icon: rechnung },
       { id: 6, title: "Ausgaben", url: "/ausgaben", icon: ausgaben },
-      { id: 7, title: "KVA", url: "/kva", icon: kva },
     ],
   },
 ];

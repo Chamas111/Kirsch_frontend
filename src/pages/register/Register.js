@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
+import logo from "../../components/navbar/fotos/logo.svg";
 import axios from "../../axiosinstance";
 function Register() {
   const navigate = useNavigate();
@@ -32,7 +33,12 @@ function Register() {
   return (
     <div class="register">
       <div className="register-box">
-        <h3 className="text-center text-info mb-4">Register</h3>
+        <h2 className="text-center text-info mb-4">Register</h2>
+        <img
+          src={logo}
+          style={{ width: "150px", height: "150px" }}
+          className="rounded mx-auto d-block rounded-circle"
+        />
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="username" className="text-info">
