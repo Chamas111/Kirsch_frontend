@@ -11,16 +11,24 @@ export const menu = [
     id: 1,
     title: "",
     listItems: [
-      {
-        id: 1,
-        title: "Homepage",
-        url: "/",
-        icon: home,
-      },
+      { id: 1, title: "Homepage", url: "/", icon: home },
       { id: 2, title: "Calendar", url: "/calendar", icon: Kalendar },
       { id: 3, title: "Halteverbotszonen", url: "/hvz", icon: hvz },
       { id: 4, title: "Lagerung", url: "/lagerung", icon: lagerung },
-      { id: 5, title: "Rechnungen", url: "/rechnungen", icon: rechnung },
+      {
+        id: 5,
+        title: "Rechnungen",
+        url: "/rechnungen",
+        icon: rechnung,
+        subItems: [
+          {
+            id: 1,
+            title: "Lager Rechnungen",
+            url: "/rechnungen/lager",
+            icon: rechnung,
+          },
+        ],
+      },
       { id: 6, title: "Ausgaben", url: "/ausgaben", icon: ausgaben },
     ],
   },

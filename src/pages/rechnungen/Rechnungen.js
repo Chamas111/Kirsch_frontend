@@ -80,6 +80,66 @@ function Rechnungen() {
       .catch((err) => console.error("Error fetching Rechnungen:", err));
   }, []);
 
+  const allInvoices = Object.values(rechnungen).flat();
+
+  const monthlyTotals = allInvoices.reduce((acc, item) => {
+    // Extract month and year
+    const date = new Date(item.rechnungsDatum);
+    const month = date.getMonth() + 1; // 0-indexed
+    const year = date.getFullYear();
+    const key = `${year}-${month.toString().padStart(2, "0")}`;
+
+    if (!acc[key]) {
+      acc[key] = {
+        totalNetto: 0,
+        totalMwst: 0,
+        totalBrutto: 0,
+        month: key,
+      };
+    }
+
+    acc[key].totalNetto += parseFloat(item.nettoBetrag) || 0;
+    acc[key].totalMwst += parseFloat(item.mwst) || 0;
+    acc[key].totalBrutto += parseFloat(item.brutto) || 0;
+
+    return acc;
+  }, {});
+
+  const getFaelligStatus = (item) => {
+    const status = item.status?.trim();
+    const faellig = item.faellig?.trim();
+
+    // 1) Manual override
+    if (faellig === "Erinnerung gesendet") {
+      return "Erinnerung gesendet";
+    }
+
+    // 2) Cash or Bezahlt
+    if (status === "Cash" || status === "Bezahlt") {
+      return "-";
+    }
+
+    // 3) Überweisung & check overdue
+    if (status === "Überweisung") {
+      const rechnungsDate = new Date(item.rechnungsDatum);
+      const now = new Date();
+
+      const diffDays = Math.floor(
+        (now - rechnungsDate) / (1000 * 60 * 60 * 24)
+      );
+
+      if (diffDays >= 15) {
+        return "Erinnerung";
+      }
+    }
+
+    // 4) Default → show stored value
+    return faellig || "";
+  };
+
+  // Convert object to array to map in JSX
+  const monthlyTotalsArray = Object.values(monthlyTotals);
+
   const RechnungDelete = async (deleteId, monthKey) => {
     if (window.confirm("Are you sure you want to delete this Rechnung?")) {
       try {
@@ -145,6 +205,39 @@ function Rechnungen() {
 
   return (
     <div>
+      {rechnungen[activeMonth] && rechnungen[activeMonth].length > 0 && (
+        <table className="table table-bordered table-success fw-bold mt-3 text-center">
+          <thead>
+            <tr>
+              <th>Gesamt Netto €</th>
+              <th>Gesamt MwSt €</th>
+              <th>Gesamt Brutto €</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {rechnungen[activeMonth]
+                  .reduce((sum, r) => sum + parseFloat(r.nettoBetrag || 0), 0)
+                  .toFixed(2)}{" "}
+                €
+              </td>
+              <td>
+                {rechnungen[activeMonth]
+                  .reduce((sum, r) => sum + parseFloat(r.mwst || 0), 0)
+                  .toFixed(2)}{" "}
+                €
+              </td>
+              <td>
+                {rechnungen[activeMonth]
+                  .reduce((sum, r) => sum + parseFloat(r.brutto || 0), 0)
+                  .toFixed(2)}{" "}
+                €
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
       {/* Tabs */}
       <div className="tabs mb-3 d-flex gap-2">
         {months.map((monthKey) => (
@@ -165,10 +258,9 @@ function Rechnungen() {
           + Monat hinzufügen
         </button>
       </div>
-
       {/* Table */}
       <table className="table table-striped">
-        <thead className="table-dark">
+        <thead className="table-dark text-center">
           <tr>
             <th>#</th>
             <th>Rechnungsnummer</th>
@@ -178,59 +270,77 @@ function Rechnungen() {
             <th>MwSt €</th>
             <th>Brutto €</th>
             <th>Rechnungsdatum</th>
-
+            <th>Fällig</th>
             <th>Update</th>
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-center">
           {rechnungen[activeMonth] && rechnungen[activeMonth].length > 0 ? (
-            rechnungen[activeMonth].map((item, index) => (
-              <tr key={item._id}>
-                <td>{index + 1}</td>
-                <td>{item.rechnungsNummer}</td>
-                <td
-                  style={{
-                    backgroundColor:
-                      item.status?.trim() === "Überweisung"
-                        ? "red"
-                        : item.status?.trim() === "Bezahlt" ||
-                          item.status?.trim() === "Cash" ||
-                          item.status?.trim() === "Storniert"
-                        ? "green"
-                        : "transparent", // fallback if status is empty or unknown
-                    color: "white",
-                  }}
-                >
-                  {item.status}
-                </td>
-                <td>{item.kundeName}</td>
-                <td>{item.nettoBetrag} €</td>
-                <td>{item.mwst} €</td>
-                <td>{item.brutto} €</td>
-                <td>{formatDate(item.rechnungsDatum)}</td>
-
-                <td>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => navigate(`/rechnungen/${item._id}/update`)}
+            <>
+              {rechnungen[activeMonth].map((item, index) => (
+                <tr key={item._id}>
+                  <td>{index + 1}</td>
+                  <td>{item.rechnungsNummer}</td>
+                  <td
+                    style={{
+                      backgroundColor:
+                        item.status?.trim() === "Überweisung"
+                          ? "red"
+                          : item.status?.trim() === "Bezahlt" ||
+                            item.status?.trim() === "Cash" ||
+                            item.status?.trim() === "Storniert"
+                          ? "green"
+                          : "transparent",
+                      color: "white",
+                    }}
                   >
-                    Update
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => RechnungDelete(item._id, activeMonth)}
+                    {item.status}
+                  </td>
+                  <td>{item.kundeName}</td>
+                  <td>{item.nettoBetrag} €</td>
+                  <td>{item.mwst} €</td>
+                  <td>{item.brutto} €</td>
+                  <td>{formatDate(item.rechnungsDatum)}</td>
+                  <td
+                    style={{
+                      backgroundColor:
+                        getFaelligStatus(item) === "Erinnerung"
+                          ? "red"
+                          : getFaelligStatus(item) === "Erinnerung gesendet"
+                          ? "green"
+                          : "transparent",
+                      color:
+                        getFaelligStatus(item) === "Erinnerung" ||
+                        getFaelligStatus(item) === "Erinnerung gesendet"
+                          ? "white"
+                          : "black",
+                    }}
                   >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
+                    {getFaelligStatus(item)}
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => navigate(`/rechnungen/${item._id}/update`)}
+                    >
+                      Update
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => RechnungDelete(item._id, activeMonth)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </>
           ) : (
             <tr>
-              <td colSpan="7" className="text-center">
+              <td colSpan="11" className="text-center">
                 Keine Rechnung-Daten für diesen Monat gefunden.
               </td>
             </tr>
