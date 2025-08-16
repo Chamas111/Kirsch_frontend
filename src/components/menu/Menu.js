@@ -8,15 +8,22 @@ function Menu() {
   return (
     <div className="menu">
       <p class="text-center p-3">Menu</p>
-      {menu.map((item) => (
+
+      {menu[0].listItems.map((item) => (
         <div className="item" key={item.id}>
-          <span className="title">{item.title}</span>
-          {item.listItems.map((listItems) => (
-            <Link to={listItems.url} className="listItem" key={listItems.id}>
-              <img src={listItems.icon} alt="" />
-              <span className="listItemTitle">{listItems.title}</span>
-            </Link>
-          ))}
+          <Link to={item.url} className="title listItem">
+            <img src={item.icon} alt="" /> {item.title}
+          </Link>
+
+          {item.subItems && (
+            <div className="title" style={{ paddingLeft: "20px" }}>
+              {item.subItems.map((sub) => (
+                <Link className="listItem" key={sub.id} to={sub.url}>
+                  <img src={sub.icon} alt="" /> {sub.title}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       ))}
     </div>

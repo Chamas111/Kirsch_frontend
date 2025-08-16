@@ -40,6 +40,7 @@ import NewAusgabe from "./pages/ausgaben/NewAusgabe";
 import UpdateAusgabe from "./pages/ausgaben/UpdateAusgabe";
 import NewRechnung from "./pages/rechnungen/NewRechnung";
 import UpdateRechnung from "./pages/rechnungen/UpdateRechnung";
+import LagerRechnungen from "./pages/rechnungen/LagerRechnungen";
 
 const localizer = momentLocalizer(moment);
 
@@ -114,6 +115,7 @@ function App() {
             <Route path="/hvz/new" element={<NewHvz />} />
             <Route path="/hvz/:id/update" element={<UpdateHvz />} />
             <Route path="/rechnungen" element={<Rechnungen />} />
+            <Route path="/rechnungen/lager" element={<LagerRechnungen />} />
             <Route path="/rechnungen/new" element={<NewRechnung />} />
             <Route path="/rechnungen/:id/update" element={<UpdateRechnung />} />
             <Route path="/ausgaben" element={<Ausgaben />} />

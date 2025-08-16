@@ -12,11 +12,19 @@ function UpdateRechnung() {
   const [status, setStatus] = useState("");
   const [rechnungsNummer, setRechnungsNummer] = useState("");
   const [kundeName, setKundeName] = useState("");
+  const [faellig, setFaellig] = useState("");
+  const [nettoBetrag, setNettoBetrag] = useState(0);
+  const [mwst, setMwst] = useState(0);
+  const [brutto, setBrutto] = useState(0);
 
-  const [nettoBetrag, setNettoBetrag] = useState("");
-  const [mwst, setMwst] = useState("");
-  const [brutto, setBrutto] = useState("");
   const VAT_RATE = 0.19; // 19%
+
+  // Helper to calculate MwSt and Brutto
+  const calculateMwstBrutto = (netto) => {
+    const calculatedMwst = netto * VAT_RATE;
+    const calculatedBrutto = netto + calculatedMwst;
+    return [calculatedMwst.toFixed(2), calculatedBrutto.toFixed(2)];
+  };
 
   // Load existing Rechnung
   useEffect(() => {
@@ -32,14 +40,14 @@ function UpdateRechnung() {
         setRechnungsNummer(rechnung.rechnungsNummer || "");
         setStatus(rechnung.status || "");
         setKundeName(rechnung.kundeName || "");
-        setNettoBetrag(rechnung.nettoBetrag || 0);
+        setNettoBetrag(Number(rechnung.nettoBetrag) || 0);
+        setFaellig(rechnung.faellig || "");
 
-        const nettoValue = Number(rechnung.nettoBetrag) || 0;
-        const calculatedMwst = nettoValue * VAT_RATE;
-        const calculatedBrutto = nettoValue + calculatedMwst;
-
-        setMwst(calculatedMwst.toFixed(2));
-        setBrutto(calculatedBrutto.toFixed(2));
+        const [calculatedMwst, calculatedBrutto] = calculateMwstBrutto(
+          Number(rechnung.nettoBetrag) || 0
+        );
+        setMwst(calculatedMwst);
+        setBrutto(calculatedBrutto);
       } catch (err) {
         console.error("Error loading Rechnung:", err);
       }
@@ -64,16 +72,21 @@ function UpdateRechnung() {
     const nettoValue = parseFloat(input) || 0;
     setNettoBetrag(nettoValue);
 
-    const calculatedMwst = nettoValue * VAT_RATE;
-    const calculatedBrutto = nettoValue + calculatedMwst;
-
-    setMwst(calculatedMwst.toFixed(2));
-    setBrutto(calculatedBrutto.toFixed(2));
+    const [calculatedMwst, calculatedBrutto] = calculateMwstBrutto(nettoValue);
+    setMwst(calculatedMwst);
+    setBrutto(calculatedBrutto);
   };
 
   // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate date format
+    if (!rechnungsDatum.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
+      alert("Bitte geben Sie ein gültiges Datum ein (dd.mm.yyyy).");
+      return;
+    }
+
     const [day, month, year] = rechnungsDatum.split(".");
     const isoDate = new Date(`${year}-${month}-${day}`);
 
@@ -82,9 +95,10 @@ function UpdateRechnung() {
       status,
       kundeName,
       rechnungsNummer,
-      nettoBetrag: Number(nettoBetrag),
+      nettoBetrag,
       mwst: Number(mwst),
       brutto: Number(brutto),
+      faellig,
     };
 
     try {
@@ -145,6 +159,7 @@ function UpdateRechnung() {
                 value={status}
                 onChange={(e) => setStatus(e.target.value.trim())}
               >
+                <option value="">-- Bitte wählen --</option>
                 <option value="Überweisung">Überweisung</option>
                 <option value="Bezahlt">Bezahlt</option>
                 <option value="Cash">Cash</option>
@@ -208,6 +223,25 @@ function UpdateRechnung() {
             </div>
           </div>
 
+          {/* Fällig */}
+          <div className="row mb-3 align-items-center p-2">
+            <label className="col-sm-2 col-form-label fw-bold">Fällig</label>
+            <div className="col-sm-10 col-md-8">
+              <select
+                name="faellig"
+                className="form-select form-control"
+                value={faellig}
+                onChange={(e) => setFaellig(e.target.value.trim())}
+              >
+                <option value="">-- Bitte wählen --</option>
+                <option value="Erinnerung gesendet">Erinnerung gesendet</option>
+                <option value="Erinnerung">Erinnerung</option>
+                <option value="<15 Tage">&lt;15 Tage</option>
+                <option value="-">-</option>
+              </select>
+            </div>
+          </div>
+
           {/* Buttons */}
           <button type="submit" className="btn btn-primary">
             Update Rechnung
@@ -215,8 +249,7 @@ function UpdateRechnung() {
           <button
             type="button"
             onClick={() => navigate("/rechnungen")}
-            className="btn btn-secondary"
-            style={{ marginLeft: "10px", color: "white" }}
+            className="btn btn-secondary ms-2"
           >
             Cancel
           </button>

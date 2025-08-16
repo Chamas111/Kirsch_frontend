@@ -13,10 +13,12 @@ function NewRechnung() {
   const [status, setStatus] = useState("Überweisung");
   const [rechnungsNummer, setRechnungsNummer] = useState("");
   const [kundeName, setKundeName] = useState("");
-
+  const [faellig, setFaellig] = useState("");
   const [nettoBetrag, setNettoBetrag] = useState("");
   const [mwst, setMwst] = useState("");
   const [brutto, setBrutto] = useState("");
+  const [isLager, setIsLager] = useState(false);
+
   const VAT_RATE = 0.19; // 19%
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +41,8 @@ function NewRechnung() {
       nettoBetrag: Number(nettoBetrag),
       mwst: Number(mwst),
       brutto: Number(brutto),
+      faellig,
+      isLager: isLager,
     };
 
     try {
@@ -179,6 +183,42 @@ function NewRechnung() {
                 value={brutto}
                 readOnly
                 style={{ backgroundColor: "gray", cursor: "not-allowed" }}
+              />
+            </div>
+          </div>
+          {/* Fällig */}
+          <div className="row mb-3 align-items-center p-2">
+            <label
+              htmlFor="inputStatus"
+              className="col-sm-2 col-form-label fw-bold"
+            >
+              Fällig
+            </label>
+            <div className="col-sm-10 col-md-8">
+              <select
+                className="form-select form-control"
+                value={faellig}
+                onChange={(e) => setFaellig(e.target.value.trim())}
+              >
+                <option value="">-- auswählen --</option>
+                <option value="Erinnerung gesendet">Erinnerung gesendet</option>
+                <option value="Erinnerung">Erinnerung</option>
+                <option value="<15 Tage">&lt;15 Tage</option>
+                <option value="-">-</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="row mb-3 p-2">
+            <label className="col-sm-4 col-form-label fw-bold">
+              Lager Rechnung
+            </label>
+            <div className="col-sm-10 col-md-6">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                checked={isLager}
+                onChange={(e) => setIsLager(e.target.checked)}
               />
             </div>
           </div>
