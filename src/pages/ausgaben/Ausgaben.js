@@ -142,6 +142,25 @@ function Ausgaben() {
 
   return (
     <div>
+      {ausgabe[activeMonth] && ausgabe[activeMonth].length > 0 && (
+        <table className="table table-bordered table-success fw-bold mt-3 text-center">
+          <thead>
+            <tr>
+              <th>Gesamt Betrag €</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {ausgabe[activeMonth]
+                  .reduce((sum, r) => sum + parseFloat(r.betrag || 0), 0)
+                  .toFixed(2)}{" "}
+                €
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
       {/* Tabs */}
       <div className="tabs mb-3 d-flex gap-2">
         {months.map((monthKey) => (
@@ -184,7 +203,7 @@ function Ausgaben() {
                 <td>{formatDate(item.datum)}</td>
                 <td>{item.rechnungsNummer}</td>
                 <td>{item.anbieter}</td>
-                <td>{item.betrag}</td>
+                <td>{item.betrag}€</td>
                 <td>
                   <button
                     className="btn btn-success"
