@@ -27,7 +27,7 @@ import Ausgaben from "./pages/ausgaben/Ausgaben";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Menu from "./components/menu/Menu";
-
+import SearchResults from "./components/SearchResult";
 import Lagerung from "./pages/lagerung/Lagerung";
 import Login from "./pages/login/Login";
 import "./styles/global.css";
@@ -124,6 +124,7 @@ function App() {
             <Route path="/lagerung" element={<Lagerung />} />
             <Route path="/lagerung/new" element={<NewLager />} />
             <Route path="/lagerung/:id/update" element={<UpdateLager />} />
+            <Route path="/search" element={<SearchResults />} />
           </Route>
         </Route>
 
