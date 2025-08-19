@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "../../axiosinstance";
 import logo from "../navbar/fotos/logo.svg";
-
+import "./navbar.css";
 function Navbar({ isLoggedin, setIsLoggedin }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,9 +78,6 @@ function Navbar({ isLoggedin, setIsLoggedin }) {
                 }
               }}
             />
-            <button type="submit" className="btn btn-outline-primary">
-              🔍
-            </button>
           </form>
 
           {/* User controls */}
@@ -116,7 +113,7 @@ function Navbar({ isLoggedin, setIsLoggedin }) {
                   </div>
                 )}
 
-                <button className="btn btn-danger ms-3" onClick={handleLogout}>
+                <button className="btn btn-primary ms-3" onClick={handleLogout}>
                   Logout
                 </button>
               </>

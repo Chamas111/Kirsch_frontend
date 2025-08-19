@@ -368,6 +368,14 @@ function NewAuftrag() {
           <button type="submit" className="btn btn-primary">
             Add Auftrag
           </button>
+          <button
+            type="button"
+            onClick={() => navigate("/calendar")}
+            className="btn btn-secondary"
+            style={{ marginLeft: "10px", color: "white" }}
+          >
+            Cancel
+          </button>
         </form>
       </div>
     </>

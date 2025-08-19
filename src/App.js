@@ -46,13 +46,28 @@ const localizer = momentLocalizer(moment);
 
 const Layout = ({ isLoggedin, setIsLoggedin }) => {
   return (
-    <div className="main">
+    <div
+      className="main"
+      style={{
+        background: "linear-gradient(to right, #ffffffff, #ffffffff)",
+      }}
+    >
       <Navbar isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
-      <div className="container">
-        <div className="menuContainer">
+      <div className="container p-1 m-0">
+        <div
+          className="menuContainer"
+          style={{
+            background: "linear-gradient(to right, #ffffffff, #ffffffff)",
+          }}
+        >
           <Menu />
         </div>
-        <div className="contentContainer">
+        <div
+          className="contentContainer p-2 "
+          style={{
+            background: "linear-gradient(to right, #5f5e75ff, #5f5e75ff)",
+          }}
+        >
           <Outlet /> {/* Pages go here */}
         </div>
       </div>

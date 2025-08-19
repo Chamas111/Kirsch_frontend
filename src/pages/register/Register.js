@@ -79,7 +79,7 @@ function Register() {
             </label>
             <input
               type="password"
-              name="confirmpassword"
+              name="confirmPassword"
               className="form-control"
               value={user.confirmPassword}
               onChange={handleChange}

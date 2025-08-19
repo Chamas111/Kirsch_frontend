@@ -158,7 +158,9 @@ function Hvz() {
           <button
             key={monthKey}
             className={`btn btn-sm ${
-              activeMonth === monthKey ? "btn-outline-primary" : "btn-primary"
+              activeMonth === monthKey
+                ? "btn-secondary "
+                : "btn-outline-secondary text-black  "
             }`}
             onClick={() => setActiveMonth(monthKey)}
           >
@@ -166,7 +168,7 @@ function Hvz() {
           </button>
         ))}
         <button
-          className="btn btn-sm btn-success ms-auto"
+          className="btn btn-md btn-success ms-auto"
           onClick={addNewMonth}
         >
           + Monat hinzufügen
@@ -175,7 +177,7 @@ function Hvz() {
 
       {/* Table for active month */}
       <table className="table table-striped">
-        <thead className="table-dark">
+        <thead className="table-dark text-center">
           <tr>
             <th>#</th>
             <th>Datum</th>
@@ -188,7 +190,7 @@ function Hvz() {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className=" text-center">
           {hvz[activeMonth] && hvz[activeMonth].length > 0 ? (
             hvz[activeMonth].map((item, index) => (
               <tr key={item._id}>

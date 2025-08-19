@@ -1,12 +1,13 @@
 import React from "react";
 import logo from "../../components/navbar/fotos/logo.svg";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import "./footer.css";
 function Footer() {
   return (
     <section>
       <footer
-        className="text-center text-white"
-        style={{ backgroundColor: "#0a4275" }}
+        className="text-center text-white footer-bg"
+        style={{ backgroundColor: "#0d0d0eff" }}
       >
         {/* Top section with text + button */}
         <div
@@ -26,7 +27,7 @@ function Footer() {
 
         {/* Bottom copyright bar */}
         <div
-          className="text-center p-3"
+          className="text-center p-3 "
           style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
         >
           © 2025 Copyright:{" "}
