@@ -10,18 +10,19 @@
 .menu .item .title {
   font-size: 14px;
   font-weight: 200;
-  color: var(--soft-color);
+  color: black;
 }
 
 .menu .item .listItem {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
 }
 .menu .item .listItem:hover {
-  background-color: var(--soft-bg);
+  background-color: rgb(161, 157, 157);
+  color: white;
 }
 .menu .item img {
   width: 26px;

@@ -243,8 +243,10 @@ function Rechnungen() {
         {months.map((monthKey) => (
           <button
             key={monthKey}
-            className={`btn btn-sm ${
-              activeMonth === monthKey ? "btn-outline-primary" : "btn-primary"
+            className={`btn btn-md ${
+              activeMonth === monthKey
+                ? "btn-secondary "
+                : "btn-outline-secondary text-black  "
             }`}
             onClick={() => setActiveMonth(monthKey)}
           >

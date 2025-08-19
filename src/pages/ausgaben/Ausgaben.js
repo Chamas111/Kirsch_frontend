@@ -166,8 +166,10 @@ function Ausgaben() {
         {months.map((monthKey) => (
           <button
             key={monthKey}
-            className={`btn btn-sm ${
-              activeMonth === monthKey ? "btn-outline-primary" : "btn-primary"
+            className={`btn btn-md ${
+              activeMonth === monthKey
+                ? "btn-secondary "
+                : "btn-outline-secondary text-black  "
             }`}
             onClick={() => setActiveMonth(monthKey)}
           >
@@ -184,7 +186,7 @@ function Ausgaben() {
 
       {/* Table */}
       <table className="table table-striped">
-        <thead className="table-dark">
+        <thead className="table-dark text-center">
           <tr>
             <th>#</th>
             <th>Datum</th>
@@ -195,7 +197,7 @@ function Ausgaben() {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-center">
           {ausgabe[activeMonth] && ausgabe[activeMonth].length > 0 ? (
             ausgabe[activeMonth].map((item, index) => (
               <tr key={item._id}>

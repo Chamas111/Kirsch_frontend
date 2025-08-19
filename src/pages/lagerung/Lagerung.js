@@ -156,8 +156,10 @@ function Lagerung() {
         {months.map((monthKey) => (
           <button
             key={monthKey}
-            className={`btn btn-sm ${
-              activeMonth === monthKey ? "btn-outline-primary" : "btn-primary"
+            className={`btn btn-md ${
+              activeMonth === monthKey
+                ? "btn-secondary "
+                : "btn-outline-secondary text-black  "
             }`}
             onClick={() => setActiveMonth(monthKey)}
           >
@@ -174,7 +176,7 @@ function Lagerung() {
 
       {/* Table for active month */}
       <table className="table table-striped">
-        <thead className="table-dark">
+        <thead className="table-dark text-center">
           <tr>
             <th>#</th>
             <th>Datum</th>
@@ -186,7 +188,7 @@ function Lagerung() {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-center">
           {lager[activeMonth] && lager[activeMonth].length > 0 ? (
             lager[activeMonth].map((item, index) => (
               <tr key={item._id}>

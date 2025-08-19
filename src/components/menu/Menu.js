@@ -7,7 +7,7 @@ import { menu } from "../../data";
 function Menu() {
   return (
     <div className="menu">
-      <p class="text-center p-3">Menu</p>
+      <p class="text-center p-3 text-black">Menu</p>
 
       {menu[0].listItems.map((item) => (
         <div className="item" key={item.id}>
