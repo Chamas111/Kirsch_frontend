@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "../axiosinstance";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function UpdateAuftrag() {
   const navigate = useNavigate();
@@ -15,40 +15,63 @@ function UpdateAuftrag() {
     auszugsadresse: "",
     auszugsEtage: "",
     auszugsAufzug: "ohne Aufzug",
+    auszugHvz: false,
     einzugsadresse: "",
     einzugsEtage: "",
     einzugsAufzug: "ohne Aufzug",
+    einzugHvz: false,
     preis: "",
     hvz: "",
     bezahlMethod: "",
     bemerkungen: "",
+    umzugsListe: "",
   });
 
+  // Load Auftrag from backend
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SERVER_BASE_URL}/api/auftraege/${id}`, {
         withCredentials: true,
       })
-
-      .then((res) => setAuftrag(res.data))
+      .then((res) => {
+        const data = res.data;
+        setAuftrag({
+          ...data,
+          auszugHvz: data.auszugHvz === true || data.auszugHvz === "true",
+          einzugHvz: data.einzugHvz === true || data.einzugHvz === "true",
+        });
+      })
       .catch((e) => console.log(e));
   }, [id]);
 
+  // Handle input changes
   const handleChange = (e) => {
-    const { name, type, checked } = e.target;
+    const { name, type, checked, value } = e.target;
 
-    setAuftrag((prev) => ({
-      ...prev,
-      [name]:
-        type === "checkbox"
-          ? checked
-            ? "mit Aufzug"
-            : "ohne Aufzug"
-          : e.target.value,
-    }));
+    if (name === "auszugHvz" || name === "einzugHvz") {
+      setAuftrag((prev) => {
+        const newAuftrag = { ...prev, [name]: checked };
+        // build hvz string
+        let hvzList = [];
+        if (newAuftrag.auszugHvz) hvzList.push("Auszug");
+        if (newAuftrag.einzugHvz) hvzList.push("Einzug");
+        //newAuftrag.hvz = hvzList.join(", ");
+        return newAuftrag;
+      });
+    } else if (name === "auszugsAufzug" || name === "einzugsAufzug") {
+      setAuftrag((prev) => ({
+        ...prev,
+        [name]: checked ? "mit Aufzug" : "ohne Aufzug",
+      }));
+    } else {
+      setAuftrag((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
-  const handelSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .put(
@@ -56,21 +79,22 @@ function UpdateAuftrag() {
         auftrag,
         { withCredentials: true }
       )
-
-      .then((res) => navigate("/calendar"))
+      .then(() => navigate("/calendar"))
       .catch((e) => console.log(e));
   };
+
   return (
     <>
-      <h2 className="mx-auto p-2">Update Auftrag </h2>
+      {/* Title */}
+      <h2 className="mx-auto p-2 mt-4 pt-5">Update Auftrag</h2>
       <div className="d-flex justify-content-center mx-auto p-2">
-        <form onSubmit={handelSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="row mb-3">
             <label
               htmlFor="inputtitle"
               className="col-sm-2 col-form-label fw-bold"
             >
-              title
+              Title
             </label>
             <div className="col-sm-10">
               <input
@@ -82,6 +106,8 @@ function UpdateAuftrag() {
               />
             </div>
           </div>
+
+          {/* Datum */}
           <div className="row mb-3">
             <label
               htmlFor="inputDatum"
@@ -92,7 +118,7 @@ function UpdateAuftrag() {
 
             <div className="col-sm-10">
               <input
-                type="Date"
+                type="date"
                 className="form-control"
                 name="datum"
                 value={auftrag.datum}
@@ -100,6 +126,8 @@ function UpdateAuftrag() {
               />
             </div>
           </div>
+
+          {/* Uhrzeit */}
           <div className="row mb-3">
             <label
               htmlFor="inputZeit"
@@ -117,6 +145,8 @@ function UpdateAuftrag() {
               />
             </div>
           </div>
+
+          {/* Kunde */}
           <div className="row mb-3">
             <label
               htmlFor="inputKunde"
@@ -134,6 +164,8 @@ function UpdateAuftrag() {
               />
             </div>
           </div>
+
+          {/* Telefon */}
           <div className="row mb-3 ">
             <label
               htmlFor="inputTele"
@@ -144,13 +176,15 @@ function UpdateAuftrag() {
             <div className="col-sm-10">
               <input
                 type="number"
-                className="form-control "
-                value={auftrag.tel}
+                className="form-control"
                 name="tel"
+                value={auftrag.tel}
                 onChange={handleChange}
               />
             </div>
           </div>
+
+          {/* Auszug */}
           <div className="container mt-4 card p-4 shadow-sm">
             <div className="row mb-3 ">
               <label htmlFor="inputAuzAdress" className="form-label fw-bold">
@@ -159,8 +193,8 @@ function UpdateAuftrag() {
               <input
                 type="text"
                 className="form-control"
-                value={auftrag.auszugsadresse}
                 name="auszugsadresse"
+                value={auftrag.auszugsadresse}
                 onChange={handleChange}
               />
             </div>
@@ -174,9 +208,9 @@ function UpdateAuftrag() {
               </label>
               <div className="col-sm-10">
                 <select
-                  className="form-select form-control"
-                  value={auftrag.auszugsEtage}
+                  className="form-select"
                   name="auszugsEtage"
+                  value={auftrag.auszugsEtage}
                   onChange={handleChange}
                 >
                   <option defaultValue>EG</option>
@@ -191,6 +225,7 @@ function UpdateAuftrag() {
                 </select>
               </div>
             </div>
+
             <div className="col-12">
               <div className="form-check">
                 <input
@@ -208,7 +243,24 @@ function UpdateAuftrag() {
                 </label>
               </div>
             </div>
+
+            <div className="col-12">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={auftrag.auszugHvz}
+                  name="auszugHvz"
+                  onChange={handleChange}
+                />
+                <label className="form-check-label fw-bold" htmlFor="auszugHvz">
+                  HVZ in der Auszugadresse
+                </label>
+              </div>
+            </div>
           </div>
+
+          {/* Einzug */}
           <div className="container mt-4 card p-4 shadow-sm">
             <div className="row mb-3 ">
               <label htmlFor="inputEinAdress" className="form-label fw-bold">
@@ -222,6 +274,7 @@ function UpdateAuftrag() {
                 onChange={handleChange}
               />
             </div>
+
             <div className="row mb-3">
               <label
                 htmlFor="inputEtage2"
@@ -231,9 +284,9 @@ function UpdateAuftrag() {
               </label>
               <div className="col-sm-10">
                 <select
-                  className="form-select form-control"
-                  value={auftrag.einzugsEtage}
+                  className="form-select"
                   name="einzugsEtage"
+                  value={auftrag.einzugsEtage}
                   onChange={handleChange}
                 >
                   <option defaultValue>EG</option>
@@ -248,6 +301,7 @@ function UpdateAuftrag() {
                 </select>
               </div>
             </div>
+
             <div className="col-12">
               <div className="form-check">
                 <input
@@ -255,7 +309,6 @@ function UpdateAuftrag() {
                   type="checkbox"
                   checked={auftrag.einzugsAufzug === "mit Aufzug"}
                   name="einzugsAufzug"
-                  value={auftrag.einzugsAufzug}
                   onChange={handleChange}
                 />
                 <label
@@ -266,7 +319,38 @@ function UpdateAuftrag() {
                 </label>
               </div>
             </div>
+
+            <div className="col-12">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={auftrag.einzugHvz}
+                  name="einzugHvz"
+                  onChange={handleChange}
+                />
+                <label className="form-check-label fw-bold" htmlFor="einzugHvz">
+                  HVZ in der Auszugadresse
+                </label>
+              </div>
+            </div>
           </div>
+
+          {/* Umzugsliste */}
+          <div className="row mb-3 p-2">
+            <label htmlFor="Bemerkungen" className="form-label fw-bold">
+              Umzugsliste
+            </label>
+            <textarea
+              name="umzugsListe"
+              rows="6"
+              className="form-control"
+              value={auftrag.umzugsListe}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* Preis + HVZ */}
           <div className="container mt-4">
             <div className="row mb-3">
               <label
@@ -279,12 +363,13 @@ function UpdateAuftrag() {
                 <input
                   type="text"
                   className="form-control"
-                  value={auftrag.preis}
                   name="preis"
+                  value={auftrag.preis}
                   onChange={handleChange}
                 />
               </div>
             </div>
+
             <div className="row mb-3">
               <label
                 htmlFor="inputHvz"
@@ -296,23 +381,23 @@ function UpdateAuftrag() {
                 <input
                   type="text"
                   className="form-control"
-                  value={auftrag.hvz}
                   name="hvz"
-                  onChange={handleChange}
+                  value={auftrag.hvz}
+                  readOnly
                 />
               </div>
             </div>
           </div>
-
+          {/* Payment */}
           <div className="row mb-3">
             <label htmlFor="inputPament" className="form-label fw-bold">
               Payment Method
             </label>
 
             <select
-              className="form-select form-control"
-              value={auftrag.bezahlMethod}
+              className="form-select"
               name="bezahlMethod"
+              value={auftrag.bezahlMethod}
               onChange={handleChange}
             >
               <option value="Bezahlung in bar">Bezahlung in bar</option>
@@ -321,29 +406,30 @@ function UpdateAuftrag() {
             </select>
           </div>
 
-          <div className="row mb-3">
+          {/* Bemerkungen */}
+          <div className="row mb-3 p-2">
             <label htmlFor="Bemerkungen" className="form-label fw-bold">
               Bemerkungen
             </label>
             <textarea
-              type="text"
               name="bemerkungen"
-              rows="10"
-              cols="30"
+              rows="5"
               className="form-control"
               value={auftrag.bemerkungen}
               onChange={handleChange}
             />
           </div>
 
+          {/* Buttons */}
+
           <button type="submit" className="btn btn-success">
             Update Auftrag
           </button>
           <button
             type="button"
+            onClick={() => navigate("/calendar")}
             className="btn btn-secondary"
-            onClick={() => navigate(`/auftrag/${id}`)}
-            style={{ marginLeft: 10 }}
+            style={{ marginLeft: "10px", color: "white" }}
           >
             Cancel
           </button>

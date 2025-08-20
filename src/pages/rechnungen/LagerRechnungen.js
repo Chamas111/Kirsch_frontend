@@ -44,7 +44,7 @@ function LagerRechnungen() {
 
   return (
     <div>
-      <h2 className="mx-auto p-2">Lager-Rechnungen</h2>
+      <h2 className="mx-auto p-2 pt-5 mt-5">Lager-Rechnungen</h2>
 
       <table className="table table-striped">
         <thead className="table-dark text-center">

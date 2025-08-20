@@ -7,7 +7,7 @@ import FinanzChart from "../../components/FinanzChart";
 import FinanzYearlyPieChart from "../../components/FinanzYearlyPieChart";
 function Home() {
   return (
-    <div className="stats-container">
+    <div className="stats-container pt-5 mt-5">
       {/* Yearly Pie */}
       <div className="stats-card">
         <AuftragStats />

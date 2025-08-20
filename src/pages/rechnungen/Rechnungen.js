@@ -204,7 +204,7 @@ function Rechnungen() {
   };
 
   return (
-    <div>
+    <div className="pt-4 mt-5">
       {rechnungen[activeMonth] && rechnungen[activeMonth].length > 0 && (
         <table className="table table-bordered table-success fw-bold mt-3 text-center">
           <thead>

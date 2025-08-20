@@ -73,7 +73,7 @@ function NewRechnung() {
   };
   return (
     <>
-      <h2 className="mx-auto p-2">Einen neuen Rechnung hinzufügen</h2>
+      <h2 className="mx-auto p-2 pt-5 mt-5">Einen neuen Rechnung hinzufügen</h2>
       <div className="d-flex justify-content-center mx-auto p-2">
         <form onSubmit={handleSubmit}>
           {/* Datum */}
@@ -93,7 +93,7 @@ function NewRechnung() {
           </div>
 
           {/* RechnungsNummer */}
-          <div className="row mb-3 p-2">
+          <div className="row mb-3 p-2 ">
             <label className="col-sm-4 col-form-label fw-bold">
               Rechnungs Nummer
             </label>

@@ -141,7 +141,7 @@ function Ausgaben() {
   };
 
   return (
-    <div>
+    <div className="pt-4 mt-5">
       {ausgabe[activeMonth] && ausgabe[activeMonth].length > 0 && (
         <table className="table table-bordered table-success fw-bold mt-3 text-center">
           <thead>
@@ -185,7 +185,7 @@ function Ausgaben() {
       </div>
 
       {/* Table */}
-      <table className="table table-striped">
+      <table className="table table-striped ">
         <thead className="table-dark text-center">
           <tr>
             <th>#</th>

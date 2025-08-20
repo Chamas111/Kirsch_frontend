@@ -153,7 +153,7 @@ function Hvz() {
   return (
     <div>
       {/* Tabs */}
-      <div className="tabs mb-3 d-flex gap-2">
+      <div className="tabs mb-3 d-flex gap-2 pt-5 mt-5">
         {months.map((monthKey) => (
           <button
             key={monthKey}

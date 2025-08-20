@@ -58,7 +58,7 @@ function CalendarPage() {
   };
 
   return (
-    <div style={{ height: "754px", margin: "50px" }}>
+    <div style={{ height: "754px", margin: "50px" }} className="pt-5 mt-5">
       <Calendar
         localizer={localizer}
         events={events}

@@ -115,7 +115,7 @@ function UpdateRechnung() {
 
   return (
     <>
-      <h2 className="mx-auto p-2">Rechnung bearbeiten</h2>
+      <h2 className="mx-auto p-2 pt-5 mt-5">Rechnung bearbeiten</h2>
       <div className="d-flex justify-content-center mx-auto p-2">
         <form onSubmit={handleSubmit}>
           {/* Datum */}

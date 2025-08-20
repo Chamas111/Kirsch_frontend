@@ -150,7 +150,7 @@ function Lagerung() {
   };
 
   return (
-    <div className="hvz">
+    <div className="hvz pt-5 mt-5">
       {/* Tabs */}
       <div className="tabs mb-3 d-flex gap-2">
         {months.map((monthKey) => (
@@ -175,7 +175,7 @@ function Lagerung() {
       </div>
 
       {/* Table for active month */}
-      <table className="table table-striped">
+      <table className="table table-striped pt-5 mt-5">
         <thead className="table-dark text-center">
           <tr>
             <th>#</th>
