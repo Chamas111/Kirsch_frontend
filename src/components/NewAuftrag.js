@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "../axiosinstance";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -17,15 +17,18 @@ function NewAuftrag() {
   const [kundeName, setkundeName] = useState("");
   const [tel, setTel] = useState("");
   const [auszugsadresse, setAuszugsadresse] = useState("");
-  const [auszugsEtage, setAuszugsEtage] = useState("");
+  const [auszugsEtage, setAuszugsEtage] = useState("EG");
   const [auszugsAufzug, setAuszugsAufzug] = useState("");
   const [einzugsadresse, setEinzugsadresse] = useState("");
-  const [einzugsEtage, setEinzugsEtage] = useState("");
+  const [einzugsEtage, setEinzugsEtage] = useState("EG");
   const [einzugsAufzug, setEinzugsAufzug] = useState("");
   const [preis, setPreis] = useState("");
   const [hvz, setHvz] = useState("");
   const [bezahlMethod, setBezahlMethod] = useState("Bezahlung in bar");
   const [bemerkungen, setBemerkungen] = useState("");
+  const [umzugsListe, setUmzugsListe] = useState("");
+  const [auszugHvz, setAuszugHvz] = useState(false);
+  const [einzugHvz, setEinzugHvz] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +51,10 @@ function NewAuftrag() {
       einzugsAufzug,
       preis,
       hvz,
+
+      auszugHvz,
+      einzugHvz,
+      umzugsListe,
       bezahlMethod,
       bemerkungen,
       eventId,
@@ -66,7 +73,7 @@ function NewAuftrag() {
 
   return (
     <>
-      <h2 className="mx-auto p-2">Einen neuen Auftrag hinzufügen</h2>
+      <h2 className="mx-auto p-2 mt-4 pt-5">Einen neuen Auftrag hinzufügen</h2>
       <div className="d-flex justify-content-center mx-auto p-2">
         <form onSubmit={handleSubmit}>
           <div className="row mb-3">
@@ -74,7 +81,7 @@ function NewAuftrag() {
               htmlFor="inputtitle"
               className="col-sm-2 col-form-label fw-bold"
             >
-              title
+              Title
             </label>
             <div className="col-sm-10">
               <input
@@ -240,6 +247,20 @@ function NewAuftrag() {
                 </label>
               </div>
             </div>
+
+            <div className="col-12">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={auszugHvz}
+                  onChange={(e) => setAuszugHvz(e.target.checked)}
+                />
+                <label className="form-check-label fw-bold" htmlFor="auszugHvz">
+                  HVZ in der Auszugadresse
+                </label>
+              </div>
+            </div>
           </div>
           <div className="container mt-4 card p-4 shadow-sm">
             <div className="row mb-3 ">
@@ -298,6 +319,34 @@ function NewAuftrag() {
                 </label>
               </div>
             </div>
+
+            <div className="col-12">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={einzugHvz}
+                  onChange={(e) => setEinzugHvz(e.target.checked)}
+                />
+                <label className="form-check-label fw-bold" htmlFor="einzugHvz">
+                  HVZ in der Auszugadresse
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="row mb-3 p-2">
+            <label htmlFor="Bemerkungen" className="form-label fw-bold">
+              Umzugsliste
+            </label>
+            <textarea
+              type="text"
+              name="message"
+              rows="10"
+              cols="30"
+              className="form-control"
+              value={umzugsListe}
+              onChange={(e) => setUmzugsListe(e.target.value)}
+            />
           </div>
           <div className="container mt-4">
             <div className="row mb-3">
@@ -350,7 +399,7 @@ function NewAuftrag() {
             </select>
           </div>
 
-          <div className="row mb-3">
+          <div className="row mb-3 p-2">
             <label htmlFor="Bemerkungen" className="form-label fw-bold">
               Bemerkungen
             </label>

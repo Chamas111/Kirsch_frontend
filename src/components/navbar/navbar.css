@@ -1,10 +1,12 @@
 .navbar {
+  position: fixed;
   width: 100%;
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: -webkit-linear-gradient(left, #690e0e, #690e0e);
+  z-index: 1000;
 }
 
 .navbar .icons {

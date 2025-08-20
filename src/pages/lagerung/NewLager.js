@@ -42,7 +42,7 @@ function NewLager() {
 
   return (
     <>
-      <h2 className="mx-auto p-2">Einen neuen Lager hinzufügen</h2>
+      <h2 className="mx-auto p-2 pt-5 mt-5">Einen neuen Lager hinzufügen</h2>
       <div className="d-flex justify-content-center mx-auto p-2 ">
         <form onSubmit={handleSubmit}>
           <div className="row mb-3 p-2">

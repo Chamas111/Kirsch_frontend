@@ -42,7 +42,7 @@ function UpdateLager() {
   };
 
   return (
-    <div className="d-flex justify-content-center mx-auto p-2 ">
+    <div className="d-flex justify-content-center mx-auto p-2 pt-5 mt-5">
       <form onSubmit={handleSubmit}>
         <h2 className="mx-auto p-2">Lager bearbeiten</h2>
 
