@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "../axiosinstance";
 import { useParams, useNavigate } from "react-router-dom";
 
+const formatGermanDate = (date) => {
+  const d = new Date(date);
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+  return `${day}.${month}.${year}`;
+};
+
 function UpdateAuftrag() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -121,7 +129,7 @@ function UpdateAuftrag() {
                 type="date"
                 className="form-control"
                 name="datum"
-                value={auftrag.datum}
+                value={formatGermanDate(auftrag.datum)}
                 onChange={handleChange}
               />
             </div>
