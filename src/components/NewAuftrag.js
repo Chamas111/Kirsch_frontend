@@ -41,7 +41,7 @@ function NewAuftrag() {
 
       datum,
       uhrZeit,
-      kundeName,
+
       tel,
       auszugsadresse,
       auszugsEtage,
@@ -92,6 +92,7 @@ function NewAuftrag() {
               />
             </div>
           </div>
+
           <div className="row mb-3">
             <label
               htmlFor="inputtitle"
@@ -108,6 +109,7 @@ function NewAuftrag() {
               />
             </div>
           </div>
+
           <div className="row mb-3">
             <label
               htmlFor="inputtitle"
@@ -124,6 +126,8 @@ function NewAuftrag() {
               />
             </div>
           </div>
+
+          {/* Datum */}
           <div className="row mb-3">
             <label
               htmlFor="inputDatum"
@@ -141,6 +145,7 @@ function NewAuftrag() {
               />
             </div>
           </div>
+          {/* Uhrzeit */}
           <div className="row mb-3">
             <label
               htmlFor="inputZeit"
@@ -157,6 +162,7 @@ function NewAuftrag() {
               />
             </div>
           </div>
+          {/* Kunde */}
           <div className="row mb-3">
             <label
               htmlFor="inputKunde"
@@ -173,6 +179,7 @@ function NewAuftrag() {
               />
             </div>
           </div>
+          {/* Telefon */}
           <div className="row mb-3 ">
             <label
               htmlFor="inputTele"
@@ -189,6 +196,7 @@ function NewAuftrag() {
               />
             </div>
           </div>
+          {/* Auszug */}
           <div className="container mt-4 card p-4 shadow-sm">
             <div className="row mb-3 ">
               <label htmlFor="inputAuzAdress" className="form-label fw-bold">
@@ -262,6 +270,7 @@ function NewAuftrag() {
               </div>
             </div>
           </div>
+          {/* Einzug */}
           <div className="container mt-4 card p-4 shadow-sm">
             <div className="row mb-3 ">
               <label htmlFor="inputEinAdress" className="form-label fw-bold">
@@ -334,6 +343,7 @@ function NewAuftrag() {
               </div>
             </div>
           </div>
+          {/* Umzugsliste */}
           <div className="row mb-3 p-2">
             <label htmlFor="Bemerkungen" className="form-label fw-bold">
               Umzugsliste
@@ -348,6 +358,7 @@ function NewAuftrag() {
               onChange={(e) => setUmzugsListe(e.target.value)}
             />
           </div>
+          {/* Preis + HVZ */}
           <div className="container mt-4">
             <div className="row mb-3">
               <label

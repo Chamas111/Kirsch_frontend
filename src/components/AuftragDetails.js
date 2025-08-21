@@ -210,10 +210,24 @@ function AuftragDetails() {
         </div>
 
         <p className="text-black">
-          <strong>Preis:</strong> {event.preis}
+          <strong>HVZ:</strong>{" "}
+          {(() => {
+            // prüfen, ob hvz nur eine Zahl ist
+            const parts = String(event.preis).split(" ");
+            const first = parts[0]; // z. B. "120"
+
+            if (!isNaN(first)) {
+              // erster Teil ist eine Zahl
+              const rest = parts.slice(1).join(" "); // z. B. "for 2 hour"
+              return rest ? `${first}€ ${rest}` : `${first}€`;
+            }
+
+            // falls kein Zahl am Anfang, einfach so anzeigen
+            return event.preis;
+          })()}
         </p>
         <p className="text-black">
-          <strong>HVZ:</strong> {event.hvz}
+          <strong>HVZ:</strong> {event.hvz}€
         </p>
         <p className="text-black">{event.bezahlMethod}</p>
         <p className="text-black">
