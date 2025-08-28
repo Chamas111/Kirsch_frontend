@@ -2,7 +2,10 @@
 
 html,
 body {
-  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* verhindert horizontales Scrollen */
+  width: 100%;
 }
 * {
   margin: 0;
@@ -18,27 +21,88 @@ a {
 .main {
   font-family: "Inter", sans-serif;
   background-color: var(--main-bg);
+  background-color: white;
   color: var(--main-color);
 
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vw;
 }
 
 .container {
   display: flex;
   flex: 1;
-  margin: 0;
+  margin: 0px;
   max-width: 100% !important;
 }
 
 .menuContainer {
-  width: 250px;
-  padding: 5px 20px;
-  border-right: 2px solid var(--soft-bg);
+  width: 13.7%;
+  padding: 10px 20px;
 }
 .contentContainer {
   flex: 1;
-  padding: 5px 20px;
-  margin: -5px;
+  padding: 5px 30px !important;
+  margin: -12px;
+}
+@media (max-width: 768px) {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* verhindert horizontales Scrollen */
+    width: 100%;
+    font-size: 12px;
+  }
+  .main {
+    font-family: "Inter", sans-serif;
+    background-color: rgb(255, 255, 255);
+    color: var(--main-color);
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%; /* volle Breite */
+    margin: 0; /* kein Außenabstand */
+    padding: 0; /* kein Innenabstand */
+  }
+
+  .container {
+    display: flex;
+    flex: 1;
+    margin: 0 !important; /* überschreibt eventuelle Abstände */
+    padding: 0 !important; /* überschreibt eventuelle Abstände */
+    width: 100% !important; /* volle Breite */
+    max-width: 100% !important;
+  }
+  .contentContainer {
+    flex: 1;
+
+    margin: -10px;
+  }
+
+  .hvzcontainer {
+    flex: 1;
+    padding: 10px 20px;
+    display: flex;
+  }
+
+  .contentContainerHome {
+    flex: 1;
+    padding: 5px 20px;
+    margin: -10%;
+  }
+  .menuContainer {
+    width: 60px; /* schmal im Mobile */
+    padding: 0 !important; /* kein extra Innenabstand */
+    margin: 0 !important; /* kein Außenabstand */
+  }
+
+  .contentContainer {
+    flex: 1;
+    margin: 0 !important; /* weißen Rand entfernen */
+    padding: 10px; /* kleiner, gleichmäßiger Abstand */
+    width: 100% !important; /* volle Breite */
+    box-sizing: border-box; /* Padding wird eingerechnet */
+  }
 }

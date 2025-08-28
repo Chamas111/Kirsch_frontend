@@ -1,0 +1,25 @@
+.search-results h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.search-results section {
+  border-top: 1px solid #ddd;
+  padding-top: 1.5rem;
+}
+
+.search-results h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 600px; /* damit Tabellen nicht "zusammenbrechen" */
+  white-space: nowrap;
+}

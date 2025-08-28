@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosinstance";
 import { useNavigate, useParams } from "react-router-dom";
-
+import "./updateausgaben.css";
 function UpdateAusgabe() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -68,14 +68,16 @@ function UpdateAusgabe() {
   };
 
   return (
-    <>
-      <h2 className="mx-auto p-2 pt-5 mt-5">Ausgabe bearbeiten</h2>
-      <div className="d-flex justify-content-center mx-auto p-2">
+    <div className="updateAusgaben">
+      <div className="d-flex justify-content-center mx-auto p-2 contentUpdateAusgaben">
         <form onSubmit={handleSubmit}>
+          <h2 className="mx-auto p-2 pt-5 mt-5 title">Ausgabe bearbeiten</h2>
           {/* Datum */}
           <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">Datum</label>
-            <div className="col-sm-10 col-md-6">
+            <label className="col-sm-12 col-md-4 col-form-label fw-bold">
+              Datum
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 pattern="\d{2}\.\d{2}\.\d{4}"
                 required
@@ -89,11 +91,11 @@ function UpdateAusgabe() {
           </div>
 
           {/* RechnungsNummer */}
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">
+          <div className="row mb-3">
+            <label className="col-sm-12 col-md-4 col-form-label fw-bold">
               Rechnungs Nummer
             </label>
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -104,9 +106,11 @@ function UpdateAusgabe() {
           </div>
 
           {/* Anbieter */}
-          <div className="row mb-3 align-items-center p-2">
-            <label className="col-sm-4 col-form-label fw-bold">Anbieter</label>
-            <div className="col-sm-10 col-md-6">
+          <div className="row mb-3 align-items-center">
+            <label className="col-sm-12 col-md-4 col-form-label fw-bold">
+              Anbieter
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -117,9 +121,11 @@ function UpdateAusgabe() {
           </div>
 
           {/* Betrag */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">Betrag</label>
-            <div className="col-sm-10 col-md-10">
+          <div className="row mb-3">
+            <label className="col-sm-12 col-md-4 col-form-label fw-bold">
+              Betrag
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 placeholder="ex. 120€"
@@ -131,7 +137,8 @@ function UpdateAusgabe() {
           </div>
 
           {/* Buttons */}
-          <button type="submit" className="btn btn-primary">
+
+          <button type="submit" className=" btn btn-primary">
             Update Ausgabe
           </button>
           <button
@@ -144,7 +151,7 @@ function UpdateAusgabe() {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

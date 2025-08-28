@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "../../axiosinstance";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./newRechnung.css";
 function NewRechnung() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -72,14 +72,22 @@ function NewRechnung() {
     setBrutto(calculatedBrutto.toFixed(2));
   };
   return (
-    <>
-      <h2 className="mx-auto p-2 pt-5 mt-5">Einen neuen Rechnung hinzufügen</h2>
-      <div className="d-flex justify-content-center mx-auto p-2">
-        <form onSubmit={handleSubmit}>
+    <div className="newRechnung">
+      <div className="d-flex justify-content-center mx-auto p-2 pt-5 mt-5 contentRechnung">
+        <form
+          onSubmit={handleSubmit}
+          className="w-100"
+          style={{ maxWidth: "700px" }}
+        >
+          <h2 className="text-center pt-2 mt-3 mb-4 title">
+            Einen neuen Rechnung hinzufügen
+          </h2>
           {/* Datum */}
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">Datum</label>
-            <div className="col-sm-10 col-md-6">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Datum
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 pattern="\d{2}\.\d{2}\.\d{4}"
                 required
@@ -93,11 +101,11 @@ function NewRechnung() {
           </div>
 
           {/* RechnungsNummer */}
-          <div className="row mb-3 p-2 ">
-            <label className="col-sm-4 col-form-label fw-bold">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
               Rechnungs Nummer
             </label>
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -107,11 +115,13 @@ function NewRechnung() {
               />
             </div>
           </div>
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">
+
+          {/* Kunde */}
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
               Kunde Name
             </label>
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -123,16 +133,13 @@ function NewRechnung() {
           </div>
 
           {/* Status */}
-          <div className="row mb-3 align-items-center p-2">
-            <label
-              htmlFor="inputStatus"
-              className="col-sm-2 col-form-label fw-bold"
-            >
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
               Status
             </label>
-            <div className="col-sm-10 col-md-8">
+            <div className="col-12 col-md-8">
               <select
-                className="form-select form-control"
+                className="form-select"
                 value={status}
                 onChange={(e) => setStatus(e.target.value.trim())}
               >
@@ -144,10 +151,12 @@ function NewRechnung() {
             </div>
           </div>
 
-          {/* NettoBetrag */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">Netto</label>
-            <div className="col-sm-10 col-md-10">
+          {/* Netto */}
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Netto
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="number"
                 placeholder="ex. 120"
@@ -160,9 +169,11 @@ function NewRechnung() {
           </div>
 
           {/* MwSt */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">MwSt</label>
-            <div className="col-sm-10 col-md-10">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              MwSt
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -174,9 +185,11 @@ function NewRechnung() {
           </div>
 
           {/* Brutto */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">Brutto</label>
-            <div className="col-sm-10 col-md-10">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Brutto
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -186,17 +199,15 @@ function NewRechnung() {
               />
             </div>
           </div>
+
           {/* Fällig */}
-          <div className="row mb-3 align-items-center p-2">
-            <label
-              htmlFor="inputStatus"
-              className="col-sm-2 col-form-label fw-bold"
-            >
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
               Fällig
             </label>
-            <div className="col-sm-10 col-md-8">
+            <div className="col-12 col-md-8">
               <select
-                className="form-select form-control"
+                className="form-select"
                 value={faellig}
                 onChange={(e) => setFaellig(e.target.value.trim())}
               >
@@ -209,11 +220,12 @@ function NewRechnung() {
             </div>
           </div>
 
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">
+          {/* Lager Rechnung */}
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
               Lager Rechnung
             </label>
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8 d-flex align-items-center">
               <input
                 type="checkbox"
                 className="form-check-input"
@@ -224,20 +236,21 @@ function NewRechnung() {
           </div>
 
           {/* Buttons */}
-          <button type="submit" className="btn btn-primary">
-            Add Rechnung
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/rechnungen")}
-            className="btn btn-secondary"
-            style={{ marginLeft: "10px", color: "white" }}
-          >
-            Cancel
-          </button>
+          <div className="d-flex flex-column flex-sm-row gap-2 mt-3">
+            <button type="submit" className="btn btn-primary w-100 w-sm-auto">
+              Add Rechnung
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/rechnungen")}
+              className="btn btn-secondary w-100 w-sm-auto"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../axiosinstance";
-
+import "./auftragsDetails.css";
 import arrow from "../components/navbar/fotos/reshot-icon-right-arrow-9NWDR8GZ2P.svg";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
@@ -94,77 +94,21 @@ function AuftragDetails() {
   };
 
   return (
-    <>
-      <div
-        style={{
-          padding: 20,
-          fontSize: "24px",
-          color: "#000",
-        }}
-        className="pt-5 mt-5"
-        ref={printRef}
-      >
-        <img
-          src={logo}
-          style={{ width: "15%", height: "15%" }}
-          className="rounded-circle rounded mx-auto d-block"
-        />
+    <div className=" p-5 ">
+      <div className="container-fluid">
+        <div className="pt-5 mt-5 cardheader" ref={printRef}>
+          <img
+            src={logo}
+            style={{ width: "15%", height: "15%" }}
+            className="rounded-circle rounded mx-auto d-block mb-3 "
+          />
 
-        <div className="d-flex justify-content-between">
-          <div
-            class="card text-bg-secondary mb-3"
-            style={{ maxwidth: "18rem" }}
-          >
-            <div class="card-header text-center fw-bold text-black">
-              Auzugsadresse
-            </div>
-            <div class="card-body">
-              <p class="card-text">{event.title}</p>
-              <p class="card-text">
-                <strong>Datum:</strong> {event.datum}
-              </p>
-              <p>
-                <strong>Uhrzeit:</strong> {event.uhrZeit}
-              </p>
-              <p>
-                <strong>Kunde:</strong> {event.kundeName}
-              </p>
-              <p>
-                <strong>tele:</strong> {event.tel}
-              </p>
-            </div>
-            <div class="card-body">
-              <p>
-                <strong>Auszug Adresse:</strong> {event.auszugsadresse}
-              </p>
-              <p>
-                <strong>Etage:</strong> {event.auszugsEtage}
-              </p>
-              <p>
-                <strong>Aufzug:</strong> {event.auszugsAufzug || "ohne Aufzug"}
-              </p>
-            </div>
-          </div>
-          <div class="d-flex flex-column">
-            {arrowPng && (
-              <div className="d-flex flex-column">
-                <img
-                  src={arrowPng}
-                  alt="arrow"
-                  style={{ width: "250px", height: "250px" }}
-                />
-                <img
-                  src={arrowPng}
-                  alt="arrow"
-                  style={{ width: "250px", height: "250px" }}
-                />
+          <div className="d-flex justify-content-center cardwidth event-details ">
+            <div class="card text-bg-secondary mb-3 ">
+              <div class="card-header text-center fw-bold text-white ">
+                Auzugsadresse
               </div>
-            )}
-          </div>
-          <div class="card text-bg-success mb-3" style={{ maxwidth: "18rem" }}>
-            <div class="card-header text-center fw-bold">Einzugsadresse</div>
-            <div class="card-body">
-              <div class="card-body">
+              <div class="card-body carddetail ">
                 <p class="card-text">{event.title}</p>
                 <p class="card-text">
                   <strong>Datum:</strong> {event.datum}
@@ -179,91 +123,127 @@ function AuftragDetails() {
                   <strong>tele:</strong> {event.tel}
                 </p>
               </div>
-              <div class="card-body">
+              <div class="card-body ">
                 <p>
-                  <strong>Einzug Adresse:</strong> {event.einzugsadresse}
+                  <strong>Auszug Adresse:</strong> {event.auszugsadresse}
                 </p>
                 <p>
-                  <strong>Etage:</strong> {event.einzugsEtage}
+                  <strong>Etage:</strong> {event.auszugsEtage}
                 </p>
                 <p>
                   <strong>Aufzug:</strong>{" "}
-                  {event.einzugsAufzug || "ohne Aufzug"}
+                  {event.auszugsAufzug || "ohne Aufzug"}
                 </p>
               </div>
             </div>
+            <div class="d-flex flex-column justify-content-center ">
+              {arrowPng && (
+                <div className="d-flex flex-column ">
+                  <img src={arrowPng} alt="arrow" className="arrow-img" />
+                  <img src={arrowPng} alt="arrow" className="arrow-img" />
+                </div>
+              )}
+            </div>
+            <div
+              class="card text-bg-secondary mb-3 "
+              style={{ maxWidth: "18rem" }}
+            >
+              <div class="card-header text-center fw-bold ">Einzugsadresse</div>
+              <div class="card-body carddetail">
+                <div class="card-body">
+                  <p class="">{event.title}</p>
+                  <p class="">
+                    <strong>Datum:</strong> {event.datum}
+                  </p>
+                  <p>
+                    <strong>Uhrzeit:</strong> {event.uhrZeit}
+                  </p>
+                  <p>
+                    <strong>Kunde:</strong> {event.kundeName}
+                  </p>
+                  <p>
+                    <strong>tele:</strong> {event.tel}
+                  </p>
+                </div>
+                <div class="card-body">
+                  <p>
+                    <strong>Einzug Adresse:</strong> {event.einzugsadresse}
+                  </p>
+                  <p>
+                    <strong>Etage:</strong> {event.einzugsEtage}
+                  </p>
+                  <p>
+                    <strong>Aufzug:</strong>{" "}
+                    {event.einzugsAufzug || "ohne Aufzug"}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* <p className="no-print">
-          <strong>Start:</strong> {new Date(event.start).toLocaleString()}
-        </p>
-        <p className="no-print">
-          <strong>End:</strong> {new Date(event.end).toLocaleString()}
-        </p> */}
-
-        <div class="card text-bg-light mb-3" style={{ maxwidth: "18rem" }}>
-          <div class="card-header text-center fw-bold">Umzugsliste</div>
-          <div class="card-body">
-            <p>{event.umzugsListe}</p>
+          <div class="card text-bg-light mb-3 event-details">
+            <div class="card-header text-center fw-bold">Umzugsliste</div>
+            <div class="card-body">
+              <p>{event.umzugsListe}</p>
+            </div>
           </div>
+
+          <p className="text-black event-details">
+            <strong>Preis:</strong>{" "}
+            {(() => {
+              // prüfen, ob hvz nur eine Zahl ist
+              const parts = String(event.preis).split(" ");
+              const first = parts[0]; // z. B. "120"
+
+              if (!isNaN(first)) {
+                // erster Teil ist eine Zahl
+                const rest = parts.slice(1).join(" "); // z. B. "for 2 hour"
+                return rest ? `${first}€ ${rest}` : `${first}€`;
+              }
+
+              // falls kein Zahl am Anfang, einfach so anzeigen
+              return event.preis;
+            })()}
+          </p>
+          <p className="text-black event-details">
+            <strong>HVZ:</strong> {event.hvz}€
+          </p>
+          <p className="text-black event-details">{event.bezahlMethod}</p>
+          <p className="text-black event-details">
+            <strong>Bemerkungen:</strong> {event.bemerkungen}
+          </p>
         </div>
-
-        <p className="text-black">
-          <strong>HVZ:</strong>{" "}
-          {(() => {
-            // prüfen, ob hvz nur eine Zahl ist
-            const parts = String(event.preis).split(" ");
-            const first = parts[0]; // z. B. "120"
-
-            if (!isNaN(first)) {
-              // erster Teil ist eine Zahl
-              const rest = parts.slice(1).join(" "); // z. B. "for 2 hour"
-              return rest ? `${first}€ ${rest}` : `${first}€`;
-            }
-
-            // falls kein Zahl am Anfang, einfach so anzeigen
-            return event.preis;
-          })()}
-        </p>
-        <p className="text-black">
-          <strong>HVZ:</strong> {event.hvz}€
-        </p>
-        <p className="text-black">{event.bezahlMethod}</p>
-        <p className="text-black">
-          <strong>Bemerkungen:</strong> {event.bemerkungen}
-        </p>
+        <div className="d-flex flex-wrap justify-content-center gap-1 mt-3 ">
+          <button
+            onClick={() => navigate(`/auftraege/${id}/update`)}
+            className="btn btn-success "
+          >
+            Update
+          </button>
+          <button
+            style={{ marginLeft: "10px", color: "white" }}
+            onClick={handleDelete}
+            className="btn btn-danger "
+          >
+            Delete
+          </button>
+          <button
+            style={{ marginLeft: "10px", color: "white" }}
+            onClick={() => navigate(`/calendar`)}
+            className="btn btn-secondary "
+          >
+            Züruck
+          </button>
+          <button
+            style={{ marginLeft: "10px", color: "white" }}
+            onClick={handleDownload}
+            className="btn btn-secondary "
+          >
+            Download
+          </button>
+        </div>
       </div>
-      <div>
-        <button
-          onClick={() => navigate(`/auftraege/${id}/update`)}
-          className="btn btn-success"
-        >
-          Update
-        </button>
-        <button
-          style={{ marginLeft: "10px", color: "white" }}
-          onClick={handleDelete}
-          className="btn btn-danger"
-        >
-          Delete
-        </button>
-        <button
-          style={{ marginLeft: "10px", color: "white" }}
-          onClick={() => navigate(`/calendar`)}
-          className="btn btn-secondary"
-        >
-          Züruck
-        </button>
-        <button
-          style={{ marginLeft: "10px", color: "white" }}
-          onClick={handleDownload}
-          className="btn btn-secondary"
-        >
-          Download
-        </button>
-      </div>
-    </>
+    </div>
   );
 }
 

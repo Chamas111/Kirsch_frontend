@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "../../axiosinstance";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./newhvz.css";
 function NewHvz() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,18 +43,23 @@ function NewHvz() {
   };
 
   return (
-    <>
-      <h2 className="mx-auto p-2 pt-5 mt-5">Einen neuen HVZ hinzufügen</h2>
-      <div className="d-flex justify-content-center mx-auto p-2 ">
-        <form onSubmit={handleSubmit}>
-          <div className="row mb-3 p-2">
+    <div className="newHvz ">
+      <div className="d-flex justify-content-center mx-auto p-2 pt-5 mt-5 content">
+        <form
+          onSubmit={handleSubmit}
+          className="w-100"
+          style={{ maxWidth: "700px" }}
+        >
+          <h2 className="text-center p-2 title ">Einen neuen HVZ hinzufügen</h2>
+          {/* Datum */}
+          <div className="row mb-3">
             <label
               htmlFor="inputdatum"
-              className="col-sm-4 col-form-label fw-bold"
+              className="col-12 col-md-4 col-form-label fw-bold"
             >
               Datum
             </label>
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -64,17 +69,18 @@ function NewHvz() {
               />
             </div>
           </div>
-          <div className="row mb-3 align-items-center p-2">
+
+          {/* Classification */}
+          <div className="row mb-3">
             <label
               htmlFor="inputClassification"
-              className="col-sm-4 col-form-label fw-bold"
+              className="col-12 col-md-4 col-form-label fw-bold"
             >
               Classification
             </label>
-
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8">
               <select
-                className="form-select w-100"
+                className="form-select"
                 value={classification}
                 onChange={(e) => setClassification(e.target.value)}
               >
@@ -83,14 +89,16 @@ function NewHvz() {
               </select>
             </div>
           </div>
-          <div className="row mb-3 p-1">
+
+          {/* Adresse */}
+          <div className="row mb-3">
             <label
               htmlFor="inputAdresse"
-              className="col-sm-4 col-form-label fw-bold"
+              className="col-12 col-md-4 col-form-label fw-bold"
             >
               Adresse
             </label>
-            <div className="col-sm-10 col-md-10">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -99,15 +107,16 @@ function NewHvz() {
               />
             </div>
           </div>
-          <div className="row mb-3 p-1">
+
+          {/* Kunde */}
+          <div className="row mb-3">
             <label
               htmlFor="kundeName"
-              className="col-sm-4 col-form-label fw-bold"
+              className="col-12 col-md-4 col-form-label fw-bold"
             >
-              kunde
+              Kunde
             </label>
-
-            <div className="col-sm-10">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -117,16 +126,17 @@ function NewHvz() {
             </div>
           </div>
 
-          <div className="row mb-3 align-items-center p-2">
+          {/* Status */}
+          <div className="row mb-3">
             <label
               htmlFor="inputStatus"
-              className="col-sm-2 col-form-label fw-bold"
+              className="col-12 col-md-4 col-form-label fw-bold"
             >
               Status
             </label>
-            <div className="col-sm-10 col-md-8">
+            <div className="col-12 col-md-8">
               <select
-                className="form-select form-control"
+                className="form-select"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
@@ -138,20 +148,22 @@ function NewHvz() {
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary">
-            Add HVZ
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/hvz")}
-            className="btn btn-secondary"
-            style={{ marginLeft: "10px", color: "white" }}
-          >
-            Cancel
-          </button>
+          {/* Buttons */}
+          <div className="d-flex flex-column flex-sm-row gap-2 mt-4">
+            <button type="submit" className="btn btn-primary w-100 w-sm-auto">
+              Add HVZ
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/hvz")}
+              className="btn btn-secondary w-100 w-sm-auto"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

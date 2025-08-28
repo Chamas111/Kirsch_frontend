@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "../axiosinstance";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./newAuftrag.css";
 function NewAuftrag() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -72,10 +72,12 @@ function NewAuftrag() {
   };
 
   return (
-    <>
-      <h2 className="mx-auto p-2 mt-4 pt-5">Einen neuen Auftrag hinzufügen</h2>
-      <div className="d-flex justify-content-center mx-auto p-2">
+    <div className="newAuftrag">
+      <div className="d-flex justify-content-center mx-auto p-2 contentAuftrag">
         <form onSubmit={handleSubmit}>
+          <h2 className="mx-auto p-2 mt-4 pt-5 title">
+            Einen neuen Auftrag hinzufügen
+          </h2>
           <div className="row mb-3">
             <label
               htmlFor="inputtitle"
@@ -197,149 +199,167 @@ function NewAuftrag() {
             </div>
           </div>
           {/* Auszug */}
-          <div className="container mt-4 card p-4 shadow-sm">
-            <div className="row mb-3 ">
-              <label htmlFor="inputAuzAdress" className="form-label fw-bold">
-                Auszug Adresse
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                value={auszugsadresse}
-                onChange={(e) => setAuszugsadresse(e.target.value)}
-              />
-            </div>
-
-            <div className="row mb-3 ">
-              <label
-                htmlFor="inputEtage1"
-                className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
-              >
-                Etage
-              </label>
-              <div className="col-sm-10">
-                <select
-                  className="form-select form-control"
-                  value={auszugsEtage}
-                  onChange={(e) => setAuszugsEtage(e.target.value)}
-                >
-                  <option defaultValue>EG</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>Haus</option>
-                  <option>Hochparterre</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={auszugsAufzug === "mit Aufzug"}
-                  onChange={(e) =>
-                    setAuszugsAufzug(
-                      e.target.checked ? "mit Aufzug" : "ohne Aufzug"
-                    )
-                  }
-                />
+          <div className="d-flex flex-column gap-3">
+            <div className="container mt-4 card p-4 shadow-sm ">
+              <div className="row mb-3">
                 <label
-                  className="form-check-label fw-bold"
-                  htmlFor="auszugsAufzug"
+                  htmlFor="inputAuzAdress"
+                  className="form-label fw-bold text-center pt-1"
                 >
-                  Aufzug
+                  Auszug Adresse
                 </label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={auszugsadresse}
+                    onChange={(e) => setAuszugsadresse(e.target.value)}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={auszugHvz}
-                  onChange={(e) => setAuszugHvz(e.target.checked)}
-                />
-                <label className="form-check-label fw-bold" htmlFor="auszugHvz">
-                  HVZ in der Auszugadresse
-                </label>
-              </div>
-            </div>
-          </div>
-          {/* Einzug */}
-          <div className="container mt-4 card p-4 shadow-sm">
-            <div className="row mb-3 ">
-              <label htmlFor="inputEinAdress" className="form-label fw-bold">
-                Einzug Adresse
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                value={einzugsadresse}
-                onChange={(e) => setEinzugsadresse(e.target.value)}
-              />
-            </div>
-            <div className="row mb-3">
-              <label
-                htmlFor="inputEtage2"
-                className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
-              >
-                Etage
-              </label>
-              <div className="col-sm-10">
-                <select
-                  className="form-select form-control"
-                  value={einzugsEtage}
-                  onChange={(e) => setEinzugsEtage(e.target.value)}
-                >
-                  <option defaultValue>EG</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>Haus</option>
-                  <option>Hochparterre</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={einzugsAufzug === "mit Aufzug"}
-                  onChange={(e) =>
-                    setEinzugsAufzug(
-                      e.target.checked ? "mit Aufzug" : "ohne Aufzug"
-                    )
-                  }
-                />
+              <div className="row mb-3 ">
                 <label
-                  className="form-check-label fw-bold"
-                  htmlFor="einzugsAufzug"
+                  htmlFor="inputEtage1"
+                  className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
                 >
-                  Aufzug
+                  Etage
                 </label>
+                <div className="col-sm-10">
+                  <select
+                    className="form-select form-control"
+                    value={auszugsEtage}
+                    onChange={(e) => setAuszugsEtage(e.target.value)}
+                  >
+                    <option defaultValue>EG</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>Haus</option>
+                    <option>Hochparterre</option>
+                  </select>
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={auszugsAufzug === "mit Aufzug"}
+                    onChange={(e) =>
+                      setAuszugsAufzug(
+                        e.target.checked ? "mit Aufzug" : "ohne Aufzug"
+                      )
+                    }
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="auszugsAufzug"
+                  >
+                    Aufzug
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-12 ">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={auszugHvz}
+                    onChange={(e) => setAuszugHvz(e.target.checked)}
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="auszugHvz"
+                  >
+                    HVZ in der Auszugadresse
+                  </label>
+                </div>
               </div>
             </div>
-
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={einzugHvz}
-                  onChange={(e) => setEinzugHvz(e.target.checked)}
-                />
-                <label className="form-check-label fw-bold" htmlFor="einzugHvz">
-                  HVZ in der Auszugadresse
+            {/* Einzug */}
+            <div className="container mt-4 card p-4 shadow-sm">
+              <div className="row mb-3 ">
+                <label
+                  htmlFor="inputEinAdress"
+                  className="form-label fw-bold text-center pt-1"
+                >
+                  Einzug Adresse
                 </label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={einzugsadresse}
+                    onChange={(e) => setEinzugsadresse(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row mb-3">
+                <label
+                  htmlFor="inputEtage2"
+                  className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
+                >
+                  Etage
+                </label>
+                <div className="col-sm-10">
+                  <select
+                    className="form-select form-control"
+                    value={einzugsEtage}
+                    onChange={(e) => setEinzugsEtage(e.target.value)}
+                  >
+                    <option defaultValue>EG</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>Haus</option>
+                    <option>Hochparterre</option>
+                  </select>
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={einzugsAufzug === "mit Aufzug"}
+                    onChange={(e) =>
+                      setEinzugsAufzug(
+                        e.target.checked ? "mit Aufzug" : "ohne Aufzug"
+                      )
+                    }
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="einzugsAufzug"
+                  >
+                    Aufzug
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={einzugHvz}
+                    onChange={(e) => setEinzugHvz(e.target.checked)}
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="einzugHvz"
+                  >
+                    HVZ in der Auszugadresse
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -359,7 +379,7 @@ function NewAuftrag() {
             />
           </div>
           {/* Preis + HVZ */}
-          <div className="container mt-4">
+          <div className="container mt-4 column-gap-2">
             <div className="row mb-3">
               <label
                 htmlFor="inputPreis"
@@ -370,7 +390,7 @@ function NewAuftrag() {
               <div className="col-sm-10">
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control "
                   value={preis}
                   onChange={(e) => setPreis(e.target.value)}
                 />
@@ -438,7 +458,7 @@ function NewAuftrag() {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

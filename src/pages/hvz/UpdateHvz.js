@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../axiosinstance";
-
+import "./updatehvz.css";
 function UpdateHvz() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,118 +42,132 @@ function UpdateHvz() {
   };
 
   return (
-    <div className="d-flex justify-content-center mx-auto p-2 pt-5 mt-5">
-      <form onSubmit={handleSubmit}>
-        <h2 className="mx-auto p-2">HVZ bearbeiten</h2>
-
-        <div className="row mb-3 p-2">
-          <label
-            htmlFor="inputdatum"
-            className="col-sm-4 col-form-label fw-bold"
-          >
-            Datum
-          </label>
-          <div className="col-sm-10 col-md-6">
-            <input
-              name="datum"
-              type="text"
-              className="form-control"
-              placeholder="dd.mm.yyyy"
-              value={hvz.datum}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className="row mb-3 align-items-center p-2">
-          <label
-            htmlFor="inputClassification"
-            className="col-sm-4 col-form-label fw-bold"
-          >
-            Classification
-          </label>
-
-          <div className="col-sm-10 col-md-6">
-            <select
-              name="classification"
-              className="form-select w-100"
-              value={hvz.classification}
-              onChange={handleChange}
-            >
-              <option value="Privat">Privat</option>
-              <option value="Rechnung">Rechnung</option>
-            </select>
-          </div>
-        </div>
-        <div className="row mb-3 p-1">
-          <label
-            htmlFor="inputAdresse"
-            className="col-sm-4 col-form-label fw-bold"
-          >
-            Adresse
-          </label>
-          <div className="col-sm-10 col-md-10">
-            <input
-              name="straße"
-              type="text"
-              className="form-control"
-              value={hvz.straße}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className="row mb-3 p-1">
-          <label
-            htmlFor="kundeName"
-            className="col-sm-4 col-form-label fw-bold"
-          >
-            kunde
-          </label>
-
-          <div className="col-sm-10">
-            <input
-              name="kundeName"
-              type="text"
-              className="form-control"
-              value={hvz.kundeName}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-
-        <div className="row mb-3 align-items-center p-2">
-          <label
-            htmlFor="inputStatus"
-            className="col-sm-2 col-form-label fw-bold"
-          >
-            Status
-          </label>
-          <div className="col-sm-10 col-md-8">
-            <select
-              name="status"
-              className="form-select form-control"
-              value={hvz.status}
-              onChange={handleChange}
-            >
-              <option value="Nicht bestellt">Nicht bestellt</option>
-              <option value="Bestellt">Bestellt</option>
-              <option value="Genehmigt">Genehmigt</option>
-              <option value="Abgelehnt">Abgelehnt</option>
-            </select>
-          </div>
-        </div>
-
-        <button type="submit" className="btn btn-success">
-          Save
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate("/hvz")}
-          className="btn btn-secondary"
-          style={{ marginLeft: "10px", color: "white" }}
+    <div className="updateRechnung">
+      <div className="d-flex justify-content-center mx-auto p-2 pt-5 mt-5 contentupdate">
+        <form
+          onSubmit={handleSubmit}
+          className="w-100"
+          style={{ maxWidth: "800px" }}
         >
-          Cancel
-        </button>
-      </form>
+          <h2 className="p-2 title text-center">HVZ bearbeiten</h2>
+
+          {/* Datum */}
+          <div className="row mb-3">
+            <label
+              htmlFor="inputdatum"
+              className="col-12 col-md-4 col-form-label fw-bold"
+            >
+              Datum
+            </label>
+            <div className="col-12 col-md-8">
+              <input
+                name="datum"
+                type="text"
+                className="form-control"
+                placeholder="dd.mm.yyyy"
+                value={hvz.datum}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {/* Classification */}
+          <div className="row mb-3">
+            <label
+              htmlFor="inputClassification"
+              className="col-12 col-md-4 col-form-label fw-bold"
+            >
+              Classification
+            </label>
+            <div className="col-12 col-md-8">
+              <select
+                name="classification"
+                className="form-select"
+                value={hvz.classification}
+                onChange={handleChange}
+              >
+                <option value="Privat">Privat</option>
+                <option value="Rechnung">Rechnung</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Adresse */}
+          <div className="row mb-3">
+            <label
+              htmlFor="inputAdresse"
+              className="col-12 col-md-4 col-form-label fw-bold"
+            >
+              Adresse
+            </label>
+            <div className="col-12 col-md-8">
+              <input
+                name="straße"
+                type="text"
+                className="form-control"
+                value={hvz.straße}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {/* Kunde */}
+          <div className="row mb-3">
+            <label
+              htmlFor="kundeName"
+              className="col-12 col-md-4 col-form-label fw-bold"
+            >
+              Kunde
+            </label>
+            <div className="col-12 col-md-8">
+              <input
+                name="kundeName"
+                type="text"
+                className="form-control"
+                value={hvz.kundeName}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {/* Status */}
+          <div className="row mb-3">
+            <label
+              htmlFor="inputStatus"
+              className="col-12 col-md-4 col-form-label fw-bold"
+            >
+              Status
+            </label>
+            <div className="col-12 col-md-8">
+              <select
+                name="status"
+                className="form-select"
+                value={hvz.status}
+                onChange={handleChange}
+              >
+                <option value="Nicht bestellt">Nicht bestellt</option>
+                <option value="Bestellt">Bestellt</option>
+                <option value="Genehmigt">Genehmigt</option>
+                <option value="Abgelehnt">Abgelehnt</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="d-flex justify-content-end mt-3 justify-content-center">
+            <button type="submit" className="btn btn-success">
+              Save
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/hvz")}
+              className="btn btn-secondary ms-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

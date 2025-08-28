@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosinstance";
 import { useNavigate } from "react-router-dom";
-
+import "./ausgaben.css";
 function Ausgaben() {
   const navigate = useNavigate();
   const [ausgabe, setAusgabe] = useState({});
@@ -183,61 +183,61 @@ function Ausgaben() {
           + Monat hinzufügen
         </button>
       </div>
-
-      {/* Table */}
-      <table className="table table-striped ">
-        <thead className="table-dark text-center">
-          <tr>
-            <th>#</th>
-            <th>Datum</th>
-            <th>RechnungsNummer</th>
-            <th>Anbieter</th>
-            <th>Betrag</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody className="text-center">
-          {ausgabe[activeMonth] && ausgabe[activeMonth].length > 0 ? (
-            ausgabe[activeMonth].map((item, index) => (
-              <tr key={item._id}>
-                <td>{index + 1}</td>
-                <td>{formatDate(item.datum)}</td>
-                <td>{item.rechnungsNummer}</td>
-                <td>{item.anbieter}</td>
-                <td>{item.betrag}€</td>
-                <td>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => navigate(`/ausgaben/${item._id}/update`)}
-                  >
-                    Update
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => AusgabeDelete(item._id, activeMonth)}
-                  >
-                    Delete
-                  </button>
+      <div className="table-responsive">
+        {/* Table */}
+        <table className="table table-striped ">
+          <thead className="table-dark text-center">
+            <tr>
+              <th>#</th>
+              <th>Datum</th>
+              <th>RechnungsNummer</th>
+              <th>Anbieter</th>
+              <th>Betrag</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody className="text-center">
+            {ausgabe[activeMonth] && ausgabe[activeMonth].length > 0 ? (
+              ausgabe[activeMonth].map((item, index) => (
+                <tr key={item._id}>
+                  <td data-label="#">{index + 1}</td>
+                  <td data-label="Datum">{formatDate(item.datum)}</td>
+                  <td data-label="RechnungsNummer">{item.rechnungsNummer}</td>
+                  <td data-label="Anbieter">{item.anbieter}</td>
+                  <td data-label="Betrag">{item.betrag}€</td>
+                  <td data-label="Update">
+                    <button
+                      className="btn btn-success"
+                      onClick={() => navigate(`/ausgaben/${item._id}/update`)}
+                    >
+                      Update
+                    </button>
+                  </td>
+                  <td data-label="Delete">
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => AusgabeDelete(item._id, activeMonth)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center">
+                  Keine Ausgabe-Daten für diesen Monat gefunden.
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7" className="text-center">
-                Keine Ausgabe-Daten für diesen Monat gefunden.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* Add button */}
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-primary ausgabenbutton"
         onClick={() => navigate("/ausgaben/new")}
       >
         Add Ausgabe

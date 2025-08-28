@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosinstance";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-
+import "./updaterechnung.css";
 function UpdateRechnung() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -114,14 +114,20 @@ function UpdateRechnung() {
   };
 
   return (
-    <>
-      <h2 className="mx-auto p-2 pt-5 mt-5">Rechnung bearbeiten</h2>
-      <div className="d-flex justify-content-center mx-auto p-2">
-        <form onSubmit={handleSubmit}>
+    <div className="updateRechnung ">
+      <div className="d-flex justify-content-center mx-auto p-2 pt-5 m-5 contentupdateRechnung">
+        <form
+          onSubmit={handleSubmit}
+          className="w-100"
+          style={{ maxWidth: "800px" }}
+        >
+          <h2 className="text-center p-2  title">Rechnung bearbeiten</h2>
           {/* Datum */}
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">Datum</label>
-            <div className="col-sm-10 col-md-6">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Datum
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 pattern="\d{2}\.\d{2}\.\d{4}"
                 required
@@ -135,11 +141,11 @@ function UpdateRechnung() {
           </div>
 
           {/* RechnungsNummer */}
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
               Rechnungs Nummer
             </label>
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -150,12 +156,14 @@ function UpdateRechnung() {
           </div>
 
           {/* Status */}
-          <div className="row mb-3 align-items-center p-2">
-            <label className="col-sm-2 col-form-label fw-bold">Status</label>
-            <div className="col-sm-10 col-md-8">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Status
+            </label>
+            <div className="col-12 col-md-8">
               <select
                 name="status"
-                className="form-select form-control"
+                className="form-select"
                 value={status}
                 onChange={(e) => setStatus(e.target.value.trim())}
               >
@@ -169,9 +177,11 @@ function UpdateRechnung() {
           </div>
 
           {/* Kunde */}
-          <div className="row mb-3 align-items-center p-2">
-            <label className="col-sm-4 col-form-label fw-bold">Kunde</label>
-            <div className="col-sm-10 col-md-6">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Kunde
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -182,9 +192,11 @@ function UpdateRechnung() {
           </div>
 
           {/* Netto Betrag */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">Betrag</label>
-            <div className="col-sm-10 col-md-10">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Betrag
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="number"
                 placeholder="ex. 120"
@@ -196,40 +208,44 @@ function UpdateRechnung() {
           </div>
 
           {/* MwSt */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">MwSt</label>
-            <div className="col-sm-10 col-md-10">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              MwSt
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
                 value={`${mwst} €`}
                 readOnly
-                style={{ backgroundColor: "gray", cursor: "not-allowed" }}
               />
             </div>
           </div>
 
           {/* Brutto */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">Brutto</label>
-            <div className="col-sm-10 col-md-10">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Brutto
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
                 value={`${brutto} €`}
                 readOnly
-                style={{ backgroundColor: "gray", cursor: "not-allowed" }}
               />
             </div>
           </div>
 
           {/* Fällig */}
-          <div className="row mb-3 align-items-center p-2">
-            <label className="col-sm-2 col-form-label fw-bold">Fällig</label>
-            <div className="col-sm-10 col-md-8">
+          <div className="mb-3 row">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Fällig
+            </label>
+            <div className="col-12 col-md-8">
               <select
                 name="faellig"
-                className="form-select form-control"
+                className="form-select"
                 value={faellig}
                 onChange={(e) => setFaellig(e.target.value.trim())}
               >
@@ -243,19 +259,21 @@ function UpdateRechnung() {
           </div>
 
           {/* Buttons */}
-          <button type="submit" className="btn btn-primary">
-            Update Rechnung
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/rechnungen")}
-            className="btn btn-secondary ms-2"
-          >
-            Cancel
-          </button>
+          <div className="d-flex justify-content-end mt-3 justify-content-center">
+            <button type="submit" className="btn btn-primary">
+              Update Rechnung
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/rechnungen")}
+              className="btn btn-secondary ms-2"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

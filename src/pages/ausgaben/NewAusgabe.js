@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "../../axiosinstance";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./newAusgaben.css";
 function NewAusgabe() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,14 +40,20 @@ function NewAusgabe() {
   };
 
   return (
-    <>
-      <h2 className="mx-auto p-2 pt-5 mt-5">Einen neuen Ausgabe hinzufügen</h2>
-      <div className="d-flex justify-content-center mx-auto p-2">
-        <form onSubmit={handleSubmit}>
+    <div className="newAusgaben">
+      <div className="d-flex justify-content-center mx-auto p-2 pt-5 mt-5 contentAusgaben">
+        <form
+          onSubmit={handleSubmit}
+          className="w-100 "
+          style={{ maxWidth: "700px" }}
+        >
+          <h2 className="text-center title">Einen neuen Ausgabe hinzufügen</h2>
           {/* Datum */}
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">Datum</label>
-            <div className="col-sm-10 col-md-6">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Datum
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 pattern="\d{2}\.\d{2}\.\d{4}"
                 required
@@ -61,11 +67,11 @@ function NewAusgabe() {
           </div>
 
           {/* RechnungsNummer */}
-          <div className="row mb-3 p-2">
-            <label className="col-sm-4 col-form-label fw-bold">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
               Rechnungs Nummer
             </label>
-            <div className="col-sm-10 col-md-6">
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -76,9 +82,11 @@ function NewAusgabe() {
           </div>
 
           {/* Anbieter */}
-          <div className="row mb-3 align-items-center p-2">
-            <label className="col-sm-4 col-form-label fw-bold">Anbieter</label>
-            <div className="col-sm-10 col-md-6">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Anbieter
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 className="form-control"
@@ -89,9 +97,11 @@ function NewAusgabe() {
           </div>
 
           {/* Betrag */}
-          <div className="row mb-3 p-1">
-            <label className="col-sm-4 col-form-label fw-bold">Betrag</label>
-            <div className="col-sm-10 col-md-10">
+          <div className="row mb-3">
+            <label className="col-12 col-md-4 col-form-label fw-bold">
+              Betrag
+            </label>
+            <div className="col-12 col-md-8">
               <input
                 type="text"
                 placeholder="ex. 120€"
@@ -103,20 +113,21 @@ function NewAusgabe() {
           </div>
 
           {/* Buttons */}
-          <button type="submit" className="btn btn-primary">
-            Add Ausgabe
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/ausgaben")}
-            className="btn btn-secondary"
-            style={{ marginLeft: "10px", color: "white" }}
-          >
-            Cancel
-          </button>
+          <div className="d-flex flex-column flex-sm-row gap-2 mt-3 ausgabenbutton">
+            <button type="submit" className="btn btn-primary w-100 w-sm-auto">
+              Add Ausgabe
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/ausgaben")}
+              className="btn btn-secondary w-100 w-sm-auto"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

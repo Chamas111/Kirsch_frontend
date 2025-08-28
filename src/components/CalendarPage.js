@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-
+import "./calendarpage.css";
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import "../../src/styles/global.css";
 
 const localizer = momentLocalizer(moment);
 
@@ -58,7 +57,7 @@ function CalendarPage() {
   };
 
   return (
-    <div style={{ height: "754px", margin: "50px" }} className="pt-5 mt-5">
+    <div className="calendar-wrapper pt-5 mt-5">
       <Calendar
         localizer={localizer}
         events={events}
@@ -67,16 +66,18 @@ function CalendarPage() {
         selectable
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
+        longPressThreshold={10}
+        popup
         style={{
-          height: 700,
-          backgroundColor: "#f0f9ff", // light blue
+          height: "100%",
+          backgroundColor: "#f0f9ff",
           padding: "10px",
           borderRadius: "10px",
           color: "#000",
         }}
-        views={[Views.MONTH, Views.WEEK, Views.DAY, Views.AGENDA]} // ✅ Enable all views
+        views={[Views.MONTH, Views.WEEK, Views.DAY, Views.AGENDA]}
         view={currentView}
-        onView={(view) => setCurrentView(view)} // ✅ Track current view
+        onView={(view) => setCurrentView(view)}
         date={currentDate}
         onNavigate={(date) => setCurrentDate(date)}
         defaultView={Views.MONTH}

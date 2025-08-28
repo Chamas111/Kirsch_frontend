@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../axiosinstance";
 import { useParams, useNavigate } from "react-router-dom";
-
+import "./updateAuftrag.css";
 const formatGermanDate = (date) => {
   const d = new Date(date);
   const day = String(d.getDate()).padStart(2, "0");
@@ -92,11 +92,12 @@ function UpdateAuftrag() {
   };
 
   return (
-    <>
+    <dic className="updateAuftrag">
       {/* Title */}
-      <h2 className="mx-auto p-2 mt-4 pt-5">Update Auftrag</h2>
-      <div className="d-flex justify-content-center mx-auto p-2">
+
+      <div className="d-flex justify-content-center mx-auto p-2 contentUpdateAuftrag">
         <form onSubmit={handleSubmit}>
+          <h2 className="mx-auto p-2 mt-4 pt-5 title">Update Auftrag</h2>
           <div className="row mb-3">
             <label
               htmlFor="inputtitle"
@@ -193,157 +194,174 @@ function UpdateAuftrag() {
           </div>
 
           {/* Auszug */}
-          <div className="container mt-4 card p-4 shadow-sm">
-            <div className="row mb-3 ">
-              <label htmlFor="inputAuzAdress" className="form-label fw-bold">
-                Auszug Adresse
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                name="auszugsadresse"
-                value={auftrag.auszugsadresse}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="row mb-3 ">
-              <label
-                htmlFor="inputEtage1"
-                className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
-              >
-                Etage
-              </label>
-              <div className="col-sm-10">
-                <select
-                  className="form-select"
-                  name="auszugsEtage"
-                  value={auftrag.auszugsEtage}
-                  onChange={handleChange}
-                >
-                  <option defaultValue>EG</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>Haus</option>
-                  <option>Hochparterre</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={auftrag.auszugsAufzug === "mit Aufzug"}
-                  name="auszugsAufzug"
-                  onChange={handleChange}
-                />
+          <div className="d-flex flex-column gap-3">
+            <div className="container mt-4 card p-4 shadow-sm">
+              <div className="row mb-3 ">
                 <label
-                  className="form-check-label fw-bold"
-                  htmlFor="auszugsAufzug"
+                  htmlFor="inputAuzAdress"
+                  className="form-label fw-bold text-center pt-1"
                 >
-                  Aufzug
+                  Auszug Adresse
                 </label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="auszugsadresse"
+                    value={auftrag.auszugsadresse}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="row mb-3 ">
+                <label
+                  htmlFor="inputEtage1"
+                  className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
+                >
+                  Etage
+                </label>
+                <div className="col-sm-10">
+                  <select
+                    className="form-select"
+                    name="auszugsEtage"
+                    value={auftrag.auszugsEtage}
+                    onChange={handleChange}
+                  >
+                    <option defaultValue>EG</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>Haus</option>
+                    <option>Hochparterre</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={auftrag.auszugsAufzug === "mit Aufzug"}
+                    name="auszugsAufzug"
+                    onChange={handleChange}
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="auszugsAufzug"
+                  >
+                    Aufzug
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={auftrag.auszugHvz}
+                    name="auszugHvz"
+                    onChange={handleChange}
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="auszugHvz"
+                  >
+                    HVZ in der Auszugadresse
+                  </label>
+                </div>
               </div>
             </div>
 
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={auftrag.auszugHvz}
-                  name="auszugHvz"
-                  onChange={handleChange}
-                />
-                <label className="form-check-label fw-bold" htmlFor="auszugHvz">
-                  HVZ in der Auszugadresse
+            {/* Einzug */}
+            <div className="container mt-4 card p-4 shadow-sm">
+              <div className="row mb-3 ">
+                <label
+                  htmlFor="inputEinAdress"
+                  className="form-label fw-bold text-center pt-1"
+                >
+                  Einzug Adresse
                 </label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="einzugsadresse"
+                    value={auftrag.einzugsadresse}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="row mb-3">
+                <label
+                  htmlFor="inputEtage2"
+                  className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
+                >
+                  Etage
+                </label>
+                <div className="col-sm-10">
+                  <select
+                    className="form-select"
+                    name="einzugsEtage"
+                    value={auftrag.einzugsEtage}
+                    onChange={handleChange}
+                  >
+                    <option defaultValue>EG</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>Haus</option>
+                    <option>Hochparterre</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={auftrag.einzugsAufzug === "mit Aufzug"}
+                    name="einzugsAufzug"
+                    onChange={handleChange}
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="einzugsAufzug"
+                  >
+                    Aufzug
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-12">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={auftrag.einzugHvz}
+                    name="einzugHvz"
+                    onChange={handleChange}
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="einzugHvz"
+                  >
+                    HVZ in der Auszugadresse
+                  </label>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* Einzug */}
-          <div className="container mt-4 card p-4 shadow-sm">
-            <div className="row mb-3 ">
-              <label htmlFor="inputEinAdress" className="form-label fw-bold">
-                Einzug Adresse
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                name="einzugsadresse"
-                value={auftrag.einzugsadresse}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="row mb-3">
-              <label
-                htmlFor="inputEtage2"
-                className="form-label col-sm-2 col-form-label fw-bold d-flex justify-content-center"
-              >
-                Etage
-              </label>
-              <div className="col-sm-10">
-                <select
-                  className="form-select"
-                  name="einzugsEtage"
-                  value={auftrag.einzugsEtage}
-                  onChange={handleChange}
-                >
-                  <option defaultValue>EG</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>Haus</option>
-                  <option>Hochparterre</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={auftrag.einzugsAufzug === "mit Aufzug"}
-                  name="einzugsAufzug"
-                  onChange={handleChange}
-                />
-                <label
-                  className="form-check-label fw-bold"
-                  htmlFor="einzugsAufzug"
-                >
-                  Aufzug
-                </label>
-              </div>
-            </div>
-
-            <div className="col-12">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={auftrag.einzugHvz}
-                  name="einzugHvz"
-                  onChange={handleChange}
-                />
-                <label className="form-check-label fw-bold" htmlFor="einzugHvz">
-                  HVZ in der Auszugadresse
-                </label>
-              </div>
-            </div>
-          </div>
-
           {/* Umzugsliste */}
           <div className="row mb-3 p-2">
             <label htmlFor="Bemerkungen" className="form-label fw-bold">
@@ -443,7 +461,7 @@ function UpdateAuftrag() {
           </button>
         </form>
       </div>
-    </>
+    </dic>
   );
 }
 
