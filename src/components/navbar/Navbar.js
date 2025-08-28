@@ -3,11 +3,12 @@ import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "../../axiosinstance";
 import logo from "../navbar/fotos/logo.svg";
 import "./navbar.css";
+
 function Navbar({ isLoggedin, setIsLoggedin }) {
   const navigate = useNavigate();
   const location = useLocation();
-
   const [user, setUser] = useState(null);
+  const [query, setQuery] = useState("");
 
   // Fetch logged-in user
   useEffect(() => {
@@ -19,6 +20,22 @@ function Navbar({ isLoggedin, setIsLoggedin }) {
     }
   }, [isLoggedin]);
 
+  // Search input handling
+  useEffect(() => {
+    if (location.pathname === "/search") {
+      const params = new URLSearchParams(location.search);
+      setQuery(params.get("query") || "");
+    } else {
+      setQuery("");
+    }
+  }, [location]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    navigate(`/search?query=${encodeURIComponent(query)}`);
+  };
+
   const handleLogout = () => {
     axios
       .post("auth/logout", {}, { withCredentials: true })
@@ -29,59 +46,51 @@ function Navbar({ isLoggedin, setIsLoggedin }) {
       .catch((err) => console.log(err.response?.data));
   };
 
-  // --- Search handling ---
-  const queryParams = new URLSearchParams(location.search);
-  const initialQuery =
-    location.pathname === "/search" ? queryParams.get("query") || "" : "";
-
-  const [query, setQuery] = useState(initialQuery);
-
-  // Clear search input when navigating away from /search
-  useEffect(() => {
-    if (location.pathname !== "/search") setQuery("");
-  }, [location.pathname]);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-    navigate(`/search?query=${encodeURIComponent(query)}`);
-  };
-
   return (
-    <nav className="navbar navbar-expand-lg navbar-light py-2">
+    <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/">
+        {/* Logo always on left */}
+        <NavLink className="navbar-brand d-flex align-items-center" to="/">
           <img
-            className="img-fluid rounded-circle"
             src={logo}
             alt="Logo"
+            className="img-fluid rounded-circle"
             width="48"
             height="48"
           />
         </NavLink>
 
-        {/* Search Box */}
-        <div className="ms-lg-auto d-flex align-items-center gap-3">
-          <form className="d-flex mx-auto" onSubmit={handleSearch}>
+        {/* Toggler on right */}
+        <button
+          className="navbar-toggler ms-auto"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* Collapsible content */}
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarContent"
+        >
+          {/* Search box */}
+          <form className="d-flex my-2 my-lg-0" onSubmit={handleSearch}>
             <input
               type="search"
               className="form-control me-2"
               placeholder="Suche..."
               value={query}
-              onChange={(e) => {
-                const val = e.target.value;
-                setQuery(val);
-
-                // If user clears input via the ❌ inside input
-                if (val === "" && location.pathname === "/search") {
-                  navigate(-1);
-                }
-              }}
+              onChange={(e) => setQuery(e.target.value)}
             />
           </form>
 
           {/* User controls */}
-          <div className="ms-lg-auto d-flex align-items-center gap-3">
+          <div className="ms-lg-auto d-flex align-items-center gap-2 my-2 my-lg-0">
             {isLoggedin ? (
               <>
                 {user && (
@@ -109,11 +118,10 @@ function Navbar({ isLoggedin, setIsLoggedin }) {
                         {user.username?.charAt(0).toUpperCase()}
                       </div>
                     )}
-                    <span className="fw-bold">{user.username}</span>
+                    <span className="fw-bold text-white">{user.username}</span>
                   </div>
                 )}
-
-                <button className="btn btn-primary ms-3" onClick={handleLogout}>
+                <button className="btn btn-primary ms-2" onClick={handleLogout}>
                   Logout
                 </button>
               </>

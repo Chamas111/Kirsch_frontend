@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "../../axiosinstance";
 import { useNavigate } from "react-router-dom";
 import "./hvz.css";
-
 function Hvz() {
   const navigate = useNavigate();
   const [hvz, setHvz] = useState({}); // grouped by MM.YYYY
@@ -151,122 +150,126 @@ function Hvz() {
   };
 
   return (
-    <div>
-      {/* Tabs */}
-      <div className="tabs mb-3 d-flex gap-2 pt-5 mt-5">
-        {months.map((monthKey) => (
+    <>
+      <div className="pt-1 hvzsize">
+        {/* Tabs */}
+        <div className="tabs mb-3 d-flex gap-2 pt-5 mt-5">
+          {months.map((monthKey) => (
+            <button
+              key={monthKey}
+              className={`btn btn-sm ${
+                activeMonth === monthKey
+                  ? "btn-secondary "
+                  : "btn-outline-secondary text-black  "
+              }`}
+              onClick={() => setActiveMonth(monthKey)}
+            >
+              {monthNameFromKey(monthKey)}
+            </button>
+          ))}
           <button
-            key={monthKey}
-            className={`btn btn-sm ${
-              activeMonth === monthKey
-                ? "btn-secondary "
-                : "btn-outline-secondary text-black  "
-            }`}
-            onClick={() => setActiveMonth(monthKey)}
+            className="btn btn-md btn-success ms-auto"
+            onClick={addNewMonth}
           >
-            {monthNameFromKey(monthKey)}
+            + Monat hinzufügen
           </button>
-        ))}
+        </div>
+        <div className="table-responsive ">
+          {/* Table for active month */}
+          <table className="table table-striped">
+            <thead className="table-dark text-center ">
+              <tr>
+                <th>#</th>
+                <th>Datum</th>
+                <th>Classification</th>
+                <th>Adresse</th>
+                <th>Kunde</th>
+                <th>Status</th>
+                <th>Nennen</th>
+                <th>Update</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody className=" text-center ">
+              {hvz[activeMonth] && hvz[activeMonth].length > 0 ? (
+                hvz[activeMonth].map((item, index) => (
+                  <tr key={item._id}>
+                    <th data-label="#">{index + 1}</th>
+                    <td data-label="Datum">{item.datum}</td>
+                    <td
+                      data-label="Classification"
+                      style={{
+                        backgroundColor:
+                          item.classification === "Privat"
+                            ? "green"
+                            : item.classification === "Rechnung"
+                            ? "red"
+                            : "transparent",
+                        color: "white",
+                      }}
+                    >
+                      {item.classification}
+                    </td>
+                    <td data-label="Adresse">{item.straße}</td>
+                    <td data-label="Kunde">{item.kundeName}</td>
+                    <td
+                      data-label="Status"
+                      style={{
+                        backgroundColor:
+                          item.status === "Bestellt"
+                            ? "green"
+                            : item.status === "Nicht bestellt"
+                            ? "gray"
+                            : item.status === "Genehmigt"
+                            ? "purple"
+                            : item.status === "Abgelehnt"
+                            ? "red"
+                            : "transparent",
+                        color: "white",
+                      }}
+                    >
+                      {item.status}
+                    </td>
+                    <td data-label="Nennen">{`HVZ_${item.datum}_${item.straße}_${item.kundeName}`}</td>
+                    <td data-label="Update">
+                      <button
+                        className="btn btn-success"
+                        onClick={() => navigate(`/hvz/${item._id}/update`)}
+                      >
+                        Update
+                      </button>
+                    </td>
+                    <td data-label="Delete">
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => HvzDelete(item._id, activeMonth)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="9" className="text-center">
+                    Keine HVZ-Daten für diesen Monat gefunden.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+        {/* Add new HVZ button */}
+
         <button
-          className="btn btn-md btn-success ms-auto"
-          onClick={addNewMonth}
+          type="button"
+          className="btn btn-primary hvzbutton"
+          onClick={() => navigate("/hvz/new")}
         >
-          + Monat hinzufügen
+          Add HVZ
         </button>
       </div>
-
-      {/* Table for active month */}
-      <table className="table table-striped">
-        <thead className="table-dark text-center">
-          <tr>
-            <th>#</th>
-            <th>Datum</th>
-            <th>Classification</th>
-            <th>Adresse</th>
-            <th>Kunde</th>
-            <th>Status</th>
-            <th>Nennen</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody className=" text-center">
-          {hvz[activeMonth] && hvz[activeMonth].length > 0 ? (
-            hvz[activeMonth].map((item, index) => (
-              <tr key={item._id}>
-                <th>{index + 1}</th>
-                <td>{item.datum}</td>
-                <td
-                  style={{
-                    backgroundColor:
-                      item.classification === "Privat"
-                        ? "green"
-                        : item.classification === "Rechnung"
-                        ? "red"
-                        : "transparent",
-                    color: "white",
-                  }}
-                >
-                  {item.classification}
-                </td>
-                <td>{item.straße}</td>
-                <td>{item.kundeName}</td>
-                <td
-                  style={{
-                    backgroundColor:
-                      item.status === "Bestellt"
-                        ? "green"
-                        : item.status === "Nicht bestellt"
-                        ? "gray"
-                        : item.status === "Genehmigt"
-                        ? "purple"
-                        : item.status === "Abgelehnt"
-                        ? "red"
-                        : "transparent",
-                    color: "white",
-                  }}
-                >
-                  {item.status}
-                </td>
-                <td>{`HVZ_${item.datum}_${item.straße}_${item.kundeName}`}</td>
-                <td>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => navigate(`/hvz/${item._id}/update`)}
-                  >
-                    Update
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => HvzDelete(item._id, activeMonth)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="9" className="text-center">
-                Keine HVZ-Daten für diesen Monat gefunden.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-      {/* Add new HVZ button */}
-
-      <button
-        type="button"
-        className="btn btn-primary "
-        onClick={() => navigate("/hvz/new")}
-      >
-        Add HVZ
-      </button>
-    </div>
+    </>
   );
 }
 

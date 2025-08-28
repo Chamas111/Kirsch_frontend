@@ -6,6 +6,7 @@ import {
   BrowserRouter,
   Navigate,
   Outlet,
+  useLocation,
 } from "react-router-dom";
 import moment from "moment";
 import { momentLocalizer } from "react-big-calendar";
@@ -45,30 +46,30 @@ import LagerRechnungen from "./pages/rechnungen/LagerRechnungen";
 const localizer = momentLocalizer(moment);
 
 const Layout = ({ isLoggedin, setIsLoggedin }) => {
+  const location = useLocation();
+  const isHvzPage = location.pathname.startsWith("/hvz");
+  const isHomePage = location.pathname === "/";
+  const isCalendarPage = location.pathname.startsWith("/calendar");
   return (
-    <div
-      className="main"
-      style={{
-        background: "linear-gradient(to right, #ffffffff, #ffffffff)",
-      }}
-    >
+    <div className="main">
       <Navbar isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
-      <div className="container p-1 m-0">
-        <div
-          className="menuContainer"
-          style={{
-            background: "linear-gradient(to right, #ffffffff, #ffffffff)",
-          }}
-        >
+      <div className="container ">
+        <div className="menuContainer">
           <Menu />
         </div>
+
         <div
-          className="contentContainer p-2 "
+          className={`contentContainer p-2 
+        ${isHvzPage ? " " : ""} 
+        ${isHomePage ? "contentContainerHome p-2" : ""} 
+       
+        ${!isHvzPage && !isHomePage ? "default-class" : ""}
+      `}
           style={{
             background: "linear-gradient(to right, #5f5e75ff, #5f5e75ff)",
           }}
         >
-          <Outlet /> {/* Pages go here */}
+          <Outlet />
         </div>
       </div>
       <Footer />

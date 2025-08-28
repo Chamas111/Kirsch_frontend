@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosinstance";
 import { useNavigate } from "react-router-dom";
-
+import "./lagerung.css";
 function Lagerung() {
   const navigate = useNavigate();
   const [lager, setLager] = useState({}); // grouped by MM.YYYY
@@ -150,9 +150,9 @@ function Lagerung() {
   };
 
   return (
-    <div className="hvz pt-5 mt-5">
+    <div className="pt-5 mt-5">
       {/* Tabs */}
-      <div className="tabs mb-3 d-flex gap-2">
+      <div className="tabs d-flex gap-2">
         {months.map((monthKey) => (
           <button
             key={monthKey}
@@ -173,64 +173,64 @@ function Lagerung() {
           + Monat hinzufügen
         </button>
       </div>
+      <div className="table-responsive">
+        {/* Table for active month */}
+        <table className="table table-striped pt-1 mt-2">
+          <thead className="table-dark text-center">
+            <tr>
+              <th>#</th>
+              <th>Datum</th>
+              <th>kunde</th>
+              <th>Lager Place</th>
+              <th>Mitarbeiter</th>
+              <th>Notitz</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody className="text-center">
+            {lager[activeMonth] && lager[activeMonth].length > 0 ? (
+              lager[activeMonth].map((item, index) => (
+                <tr key={item._id}>
+                  <th data-label="#">{index + 1}</th>
+                  <td data-label="datum">{item.datum}</td>
+                  <td data-label="kundeName">{item.kundeName}</td>
+                  <td data-label="lager">{item.lager}</td>
+                  <td data-label="employeeName">{item.employeeName}</td>
+                  <td data-label="notitz">{item.notitz}</td>
 
-      {/* Table for active month */}
-      <table className="table table-striped pt-5 mt-5">
-        <thead className="table-dark text-center">
-          <tr>
-            <th>#</th>
-            <th>Datum</th>
-            <th>kunde</th>
-            <th>Lager Place</th>
-            <th>Mitarbeiter</th>
-            <th>Notitz</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody className="text-center">
-          {lager[activeMonth] && lager[activeMonth].length > 0 ? (
-            lager[activeMonth].map((item, index) => (
-              <tr key={item._id}>
-                <th>{index + 1}</th>
-                <td>{item.datum}</td>
-                <td>{item.kundeName}</td>
-                <td>{item.lager}</td>
-                <td>{item.employeeName}</td>
-                <td>{item.notitz}</td>
-
-                <td>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => navigate(`/lagerung/${item._id}/update`)}
-                  >
-                    Update
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => LagerDelete(item._id, activeMonth)}
-                  >
-                    Delete
-                  </button>
+                  <td data-label="Update">
+                    <button
+                      className="btn btn-success"
+                      onClick={() => navigate(`/lagerung/${item._id}/update`)}
+                    >
+                      Update
+                    </button>
+                  </td>
+                  <td data-label="Delete">
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => LagerDelete(item._id, activeMonth)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="9" className="text-center">
+                  Keine Lager-Daten für diesen Monat gefunden.
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="9" className="text-center">
-                Keine Lager-Daten für diesen Monat gefunden.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* Add new HVZ button */}
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-primary mt-2 mb-2"
         onClick={() => navigate("/lagerung/new")}
       >
         Add Lager

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosinstance";
 import { useNavigate } from "react-router-dom";
-
+import "./rechnungen.css";
 function Rechnungen() {
   const navigate = useNavigate();
   const [rechnungen, setRechnungen] = useState([]);
@@ -260,100 +260,107 @@ function Rechnungen() {
           + Monat hinzufügen
         </button>
       </div>
-      {/* Table */}
-      <table className="table table-striped">
-        <thead className="table-dark text-center">
-          <tr>
-            <th>#</th>
-            <th>Rechnungsnummer</th>
-            <th>Status</th>
-            <th>Kunde</th>
-            <th>Netto €</th>
-            <th>MwSt €</th>
-            <th>Brutto €</th>
-            <th>Rechnungsdatum</th>
-            <th>Fällig</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody className="text-center">
-          {rechnungen[activeMonth] && rechnungen[activeMonth].length > 0 ? (
-            <>
-              {rechnungen[activeMonth].map((item, index) => (
-                <tr key={item._id}>
-                  <td>{index + 1}</td>
-                  <td>{item.rechnungsNummer}</td>
-                  <td
-                    style={{
-                      backgroundColor:
-                        item.status?.trim() === "Überweisung"
-                          ? "red"
-                          : item.status?.trim() === "Bezahlt" ||
-                            item.status?.trim() === "Cash" ||
-                            item.status?.trim() === "Storniert"
-                          ? "green"
-                          : "transparent",
-                      color: "white",
-                    }}
-                  >
-                    {item.status}
-                  </td>
-                  <td>{item.kundeName}</td>
-                  <td>{item.nettoBetrag} €</td>
-                  <td>{item.mwst} €</td>
-                  <td>{item.brutto} €</td>
-                  <td>{formatDate(item.rechnungsDatum)}</td>
-                  <td
-                    style={{
-                      backgroundColor:
-                        getFaelligStatus(item) === "Erinnerung"
-                          ? "red"
-                          : getFaelligStatus(item) === "Erinnerung gesendet"
-                          ? "green"
-                          : "transparent",
-                      color:
-                        getFaelligStatus(item) === "Erinnerung" ||
-                        getFaelligStatus(item) === "Erinnerung gesendet"
-                          ? "white"
-                          : "black",
-                    }}
-                  >
-                    {getFaelligStatus(item)}
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-success"
-                      onClick={() => navigate(`/rechnungen/${item._id}/update`)}
-                    >
-                      Update
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => RechnungDelete(item._id, activeMonth)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </>
-          ) : (
+      <div className="table-responsive">
+        {/* Table */}
+        <table className="table table-striped">
+          <thead className="table-dark text-center">
             <tr>
-              <td colSpan="11" className="text-center">
-                Keine Rechnung-Daten für diesen Monat gefunden.
-              </td>
+              <th>#</th>
+              <th>Rechnungsnummer</th>
+              <th>Status</th>
+              <th>Kunde</th>
+              <th>Netto €</th>
+              <th>MwSt €</th>
+              <th>Brutto €</th>
+              <th>Rechnungsdatum</th>
+              <th>Fällig</th>
+              <th>Update</th>
+              <th>Delete</th>
             </tr>
-          )}
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody className="text-center">
+            {rechnungen[activeMonth] && rechnungen[activeMonth].length > 0 ? (
+              <>
+                {rechnungen[activeMonth].map((item, index) => (
+                  <tr key={item._id}>
+                    <td data-label="#">{index + 1}</td>
+                    <td data-label="RechnungsNummer">{item.rechnungsNummer}</td>
+                    <td
+                      data-label="Status"
+                      style={{
+                        backgroundColor:
+                          item.status?.trim() === "Überweisung"
+                            ? "red"
+                            : item.status?.trim() === "Bezahlt" ||
+                              item.status?.trim() === "Cash" ||
+                              item.status?.trim() === "Storniert"
+                            ? "green"
+                            : "transparent",
+                        color: "white",
+                      }}
+                    >
+                      {item.status}
+                    </td>
+                    <td data-label="kundeName">{item.kundeName}</td>
+                    <td data-label="NettoBetrag">{item.nettoBetrag} €</td>
+                    <td data-label="Mwst">{item.mwst} €</td>
+                    <td data-label="Brutto">{item.brutto} €</td>
+                    <td data-label="RechnungsDatum">
+                      {formatDate(item.rechnungsDatum)}
+                    </td>
+                    <td
+                      data-label="Fällig"
+                      style={{
+                        backgroundColor:
+                          getFaelligStatus(item) === "Erinnerung"
+                            ? "red"
+                            : getFaelligStatus(item) === "Erinnerung gesendet"
+                            ? "green"
+                            : "transparent",
+                        color:
+                          getFaelligStatus(item) === "Erinnerung" ||
+                          getFaelligStatus(item) === "Erinnerung gesendet"
+                            ? "white"
+                            : "black",
+                      }}
+                    >
+                      {getFaelligStatus(item)}
+                    </td>
+                    <td data-label="Update">
+                      <button
+                        className="btn btn-success"
+                        onClick={() =>
+                          navigate(`/rechnungen/${item._id}/update`)
+                        }
+                      >
+                        Update
+                      </button>
+                    </td>
+                    <td data-label="Delete">
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => RechnungDelete(item._id, activeMonth)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ) : (
+              <tr>
+                <td colSpan="11" className="text-center">
+                  Keine Rechnung-Daten für diesen Monat gefunden.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* Add button */}
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-primary rechnungsbutton"
         onClick={() => navigate("/rechnungen/new")}
       >
         Add Rechnung
