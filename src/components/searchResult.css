@@ -1,25 +1,43 @@
-.search-results h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
+/* Default: show table, hide cards */
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
 }
 
-.search-results section {
-  border-top: 1px solid #ddd;
-  padding-top: 1.5rem;
-}
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: block;
+  }
 
-.search-results h3 {
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
+  .result-card,
+  .search-results .result-card {
+    width: min(92vw, 315px) !important; /* max Breite, responsive */
+    max-width: 420px;
+    margin: 12px auto !important; /* zentriert */
+    background: #ffffff !important; /* weiße Karte */
+    color: #222 !important;
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    overflow: hidden !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
 
-.table-responsive {
-  overflow-x: auto;
-}
+  .result-card .card-row {
+    margin: 4px 0;
+    font-size: 14px;
+    color: black;
+  }
 
-.table {
-  min-width: 600px; /* damit Tabellen nicht "zusammenbrechen" */
-  white-space: nowrap;
+  .result-card strong {
+    color: #222;
+    margin-right: 6px;
+  }
 }
