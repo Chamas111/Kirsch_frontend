@@ -79,5 +79,6 @@
     position: absolute;
     left: 60%;
     transform: translateX(-50%);
+    position: fixed;
   }
 }
